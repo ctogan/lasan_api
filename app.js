@@ -6,8 +6,12 @@ var cookieParser = require('cookie-parser');
 const db = require('./models');
 var logger = require('morgan');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerSumDocument = require ('./swagger.json');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const sumRouter = require('./routes/sum');
 
 var app = express();
 const multer = require("multer");
@@ -55,13 +59,16 @@ db.sequelize.sync().then(() => {
 
 
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/sum', sumRouter);
 
 
 // error handler
@@ -74,5 +81,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSumDocument));
 
 module.exports = app;

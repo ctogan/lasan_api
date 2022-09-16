@@ -16,8 +16,13 @@ router.get('/', function(req, res, next) {
 
 //Article
 router.get('/api/article', articleController.list);
-router.get('/api/article/:id', articleController.getById);
+router.get('/api/article/get/recommended', articleController.recommended);
+router.get('/api/article/get/selected', articleController.selected);
+router.get('/api/article/get/newest', articleController.newest);
+router.get('/api/article/get/popular', articleController.popular);
+router.post('/api/article/get/id', articleController.getById);
 router.post('/api/article/add', articleController.add);
+
 
 
 //Topic
@@ -30,48 +35,15 @@ router.post('/api/user/topic/add', userTopicController.add);
 
 // module.exports = function (app) {
 
-	//User Auth
-	// router.post('/api/auth/signup',[
-    //   verifySignUpController.checkDuplicateUserNameOrEmail,verifySignUpController.checkRolesExisted
-	// 	],
-	// 	verifySignController.signup);
+//User Auth
+router.post('/api/auth/signup',[
+		verifySignUpController.checkDuplicateUserNameOrEmail,
+		verifySignUpController.checkRolesExisted
+	],
+verifySignController.signup);
 
-	router.post('/api/auth/signup',verifySignController.signup);
+router.post('/api/auth/signin', verifySignController.signin);
 
-    router.post('/api/auth/signin', verifySignController.signin);
-
-	//Status
-	router.get('/api/status',statusController.list);
-	router.get('/api/statususer',
-		[
-      verifyJwtTokenController.verifyToken]
-      ,
-		statusController.listStatusUser);
-	
-    router.get('/api/status/:id',
-		[
-      verifyJwtTokenController.verifyToken,
-			verifyJwtTokenController.isAdmin
-		],
-		statusController.getById);
-    router.post('/api/status',
-		[
-      verifyJwtTokenController.verifyToken,
-			verifyJwtTokenController.isAdmin
-		],
-		statusController.add);
-    router.put('/api/status/:id',
-		[
-      verifyJwtTokenController.verifyToken,
-			verifyJwtTokenController.isAdmin
-		],
-		statusController.update);
-
-    router.delete('/api/status/:id',
-		[verifyJwtTokenController.verifyToken,
-			verifyJwtTokenController.isAdmin
-		],
-		statusController.delete);
 // }
 
 module.exports = router;

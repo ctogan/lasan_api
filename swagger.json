@@ -1,0 +1,513 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "LAGI SANTAI API",
+    "description" : "Sum API Documentation",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:3000"
+  } ],
+  "tags" : [
+    {
+      "name" : "AUTH",
+      "description" : "POST tag description example"
+    }
+  ],
+  "paths" : {
+    "/api/auth/signup/" : {
+      "post" : {
+        "description" : "Example post description",
+        "tags" : [ "AUTH" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+    "/api/auth/signin/" : {
+      "post" : {
+        "description" : "Example post description",
+        "tags" : [ "AUTH" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+     "/api/article/" : {
+      "get" : {
+        "description" : "Example post description",
+        "tags" : [ "ARTICLE" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+
+    "/api/article/get/recommended" : {
+      "get" : {
+        "description" : "Example post description",
+        "tags" : [ "ARTICLE" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+
+    "/api/article/get/selected" : {
+      "get" : {
+        "description" : "Example post description",
+        "tags" : [ "ARTICLE" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+
+    "/api/article/get/newest" : {
+      "get" : {
+        "description" : "Example post description",
+        "tags" : [ "ARTICLE" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+
+    "/api/article/get/popular" : {
+      "get" : {
+        "description" : "Example post description",
+        "tags" : [ "ARTICLE" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    },
+    "/article/get/id/" : {
+      "post" : {
+        "description" : "Example post description",
+        "tags" : [ "ARTICLE" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "Body Request" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 2
+                  }
+                },
+                "Body Request Lainnya" : {
+                  "value": {
+                    "firstNumber": 1,
+                    "secondNumber": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sukses",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                },
+                "examples" : {
+                  "response": {
+                    "value": {
+                      "sum": 3,
+                      "message": "Sukses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://localhost:3000"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://localhost:3000"
+      } ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "firstNumber": {
+            "type": "integer"
+          },
+          "secondNumber": {
+            "type": "integer"
+          }
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "sum": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

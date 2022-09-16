@@ -5,12 +5,13 @@ const User = require('../models').User
 const Role = require('../models').Role
 const Op = db.Sequelize.Op;
 const config_roles = require('../config/configRoles');
+const uuid = require('uuid');
 
 module.exports = {
 	signup(req, res) {
 		 User
 			.create({
-                id: req.body.id,
+                uuid: uuid.v4(),
                 first_name: req.body.firstname,
                 last_name: req.body.lastname,
                 username: req.body.username,
@@ -50,30 +51,6 @@ module.exports = {
 					});
 				});
 				
-				// Role.findAll({
-				// 	where: {
-				// 		name: {
-				// 			[Op.or]: req.body.roles
-				// 		}
-				// 	}
-				// }).then(roles => {
-					
-				// 	user.setroles(roles).then(() => {
-				// 		res.status(200).send({
-				// 			auth: true,
-				// 			id: req.body.id,
-				// 			message: "User registered successfully!",
-				// 			errors: null,
-				// 		});
-				// 	});
-					
-				// }).catch(err => {
-				// 	res.status(500).send({
-				// 		auth: false,
-				// 		message: "Error set roles",
-				// 		errors: err
-				// 	});
-				// });
 			}).catch(err => {
 				res.status(500).send({
 					auth: false,

@@ -1,24 +1,10 @@
 const User = require('../models').User
 const config_roles = require('../config/configRoles');
 const ROLEs = config_roles.ROLEs
+const uuid = require('uuid');
 
 module.exports = {
 	checkDuplicateUserNameOrEmail(req, res, next) {
-		User.findOne({
-			where: {
-				id: req.body.id
-			}
-		}).then(user => {
-			if (user) {
-				res.status(400).send({
-					auth: false,
-					id: req.body.id,
-					message: "Error",
-					errors: "Id is already taken!"
-				});
-				return;
-			}
-
 			User.findOne({
 				where: {
 					email: req.body.email
@@ -35,7 +21,6 @@ module.exports = {
 				}
 				next();
 			});
-		});
 	},
 
 	checkRolesExisted(req, res, next) {
