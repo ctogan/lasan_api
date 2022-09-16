@@ -5,6 +5,7 @@
     "database": "santaiajadb",
     "host": "lagisantai.ctkhbixs0dna.ap-southeast-1.rds.amazonaws.com",
     "dialect": "postgres"
+    
   },
   "test": {
     "username": "sambilngopi_user",
@@ -21,3 +22,5 @@
     "dialect": "postgres"
   }
 }
+
+

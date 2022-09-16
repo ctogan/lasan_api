@@ -31,10 +31,12 @@ router.post('/api/user/topic/add', userTopicController.add);
 // module.exports = function (app) {
 
 	//User Auth
-	router.post('/api/auth/signup',[
-      verifySignUpController.checkDuplicateUserNameOrEmail,verifySignUpController.checkRolesExisted
-		],
-		verifySignController.signup);
+	// router.post('/api/auth/signup',[
+    //   verifySignUpController.checkDuplicateUserNameOrEmail,verifySignUpController.checkRolesExisted
+	// 	],
+	// 	verifySignController.signup);
+
+	router.post('/api/auth/signup',verifySignController.signup);
 
     router.post('/api/auth/signin', verifySignController.signin);
 

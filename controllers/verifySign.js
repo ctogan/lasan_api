@@ -4,11 +4,11 @@ const db = require('../models/index');
 const User = require('../models').User
 const Role = require('../models').Role
 const Op = db.Sequelize.Op;
-const config = require('../config/configRoles');
+const config_roles = require('../config/configRoles');
 
 module.exports = {
 	signup(req, res) {
-		return User
+		 User
 			.create({
                 id: req.body.id,
                 first_name: req.body.firstname,
@@ -18,7 +18,8 @@ module.exports = {
                 phone: req.body.phone,
                 gender: req.body.gender,
 				password: bcrypt.hashSync(req.body.password, 8)
-			}).then(user => {
+			}).then(data => {
+
 				Role.findAll({
 					where: {
 						name: {
@@ -26,21 +27,53 @@ module.exports = {
 						}
 					}
 				}).then(roles => {
-					user.setRoles(roles).then(() => {
-						res.status(200).send({
-							auth: true,
-							id: req.body.id,
-							message: "User registered successfully!",
-							errors: null,
-						});
+
+					res.status(200).send({
+						auth: true,
+						id: req.body.id,
+						message: roles,
+						errors: null,
 					});
+					// data.setRoles(roles).then(() => {
+					// 	res.status(200).send({
+					// 		auth: true,
+					// 		id: req.body.id,
+					// 		message: "User registered successfully!",
+					// 		errors: null,
+					// 	});
+					// });
 				}).catch(err => {
 					res.status(500).send({
 						auth: false,
-						message: "Error",
+						message: "Error add Roles",
 						errors: err
 					});
 				});
+				
+				// Role.findAll({
+				// 	where: {
+				// 		name: {
+				// 			[Op.or]: req.body.roles
+				// 		}
+				// 	}
+				// }).then(roles => {
+					
+				// 	user.setroles(roles).then(() => {
+				// 		res.status(200).send({
+				// 			auth: true,
+				// 			id: req.body.id,
+				// 			message: "User registered successfully!",
+				// 			errors: null,
+				// 		});
+				// 	});
+					
+				// }).catch(err => {
+				// 	res.status(500).send({
+				// 		auth: false,
+				// 		message: "Error set roles",
+				// 		errors: err
+				// 	});
+				// });
 			}).catch(err => {
 				res.status(500).send({
 					auth: false,
@@ -59,6 +92,7 @@ module.exports = {
 				}
 			}).then(user => {
 				if (!user) {
+
 					return res.status(404).send({
 						auth: false,
 						email: req.body.email,
@@ -66,6 +100,7 @@ module.exports = {
 						message: "Error",
 						errors: "User Not Found."
 					});
+
 				}
 
 				var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
@@ -81,17 +116,28 @@ module.exports = {
 
 				var token = 'Bearer ' + jwt.sign({
 					id: user.id
-				}, config.secret, {
+				}, config_roles.secret, {
 					expiresIn: 86400 //24h expired
 				});
 
+				// user.getRoles().then(roles => {
+				// 	res.status(200).send({
+				// 	  id: user.id,
+				// 	  username: user.username,
+				// 	  email: user.email,
+				// 	  roles: roles,
+				// 	  accessToken: token
+				// 	});
+				// });
+			
 				res.status(200).send({
 					auth: true,
 					email: req.body.email,
 					accessToken: token,
-					message: "Error",
+					message: "Success",
 					errors: null
 				});
+
 			}).catch(err => {
 				res.status(500).send({
 					auth: false,
@@ -101,5 +147,6 @@ module.exports = {
 					errors: err
 				});
 			});
+	
 	}
 }

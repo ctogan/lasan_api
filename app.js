@@ -31,9 +31,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const title = process.env.TITLE;
-const port = process.env.PORT;
-const baseUrl = process.env.URL + port;
+const title = 'Lasan API';
+const port = '3001';
+const baseUrl = 'http://127.0.0.1:3000/';
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -49,26 +49,11 @@ app.use((req, res, next) => {
 });
 
 db.sequelize.sync().then(() => {
-  // create_roles();
-  app.listen(3001, () => console.log(title + " run on " + baseUrl))
+  
+  app.listen(port, () => console.log(title + " run on " + baseUrl))
 });
 
-function create_roles(){
-db.role.create({
-  id: 1,
-  name: "USER"
-});
 
-db.role.create({
-  id: 2,
-  name: "EDITOR"
-});
-
-db.role.create({
-  id: 3,
-  name: "ADMIN"
-});
-}
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config/configRoles.js');
+const config_roles = require('../config/configRoles.js');
 const User = require('../models').User;
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
 			});
 		}
 
-		jwt.verify(token, config.secret, (err, decoded) => {
+		jwt.verify(token, config_roles.secret, (err, decoded) => {
 			if (err) {
 				return res.status(500).send({
 					auth: false,

@@ -1,6 +1,6 @@
 const User = require('../models').User
-const config = require('../config/configRoles');
-const ROLEs = config.Roles
+const config_roles = require('../config/configRoles');
+const ROLEs = config_roles.ROLEs
 
 module.exports = {
 	checkDuplicateUserNameOrEmail(req, res, next) {
