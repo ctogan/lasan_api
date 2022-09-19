@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const title = 'Lasan API';
 const port = '3001';
-const baseUrl = 'http://127.0.0.1:3000/';
+const baseUrl = 'http://127.0.0.1:3001/';
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
