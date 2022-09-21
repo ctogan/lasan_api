@@ -23,10 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     topic_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER
+    user_id: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'userTopic',
+    tableName:'user_topics',
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   });
   return userTopic;
 };

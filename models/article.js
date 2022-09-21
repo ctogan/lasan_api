@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Article.belongsTo(models.Topic,{
-          foreignKey:'id',
-          as:'topic'
-      })
+      // Article.belongsTo(models.Topic,{
+      //     foreignKey:'id',
+      //     as:'topic'
+      // })
     }
   }
   Article.init({
@@ -25,10 +25,19 @@ module.exports = (sequelize, DataTypes) => {
     article: DataTypes.TEXT,
     image: DataTypes.STRING,
     status: DataTypes.STRING,
+    slug: DataTypes.STRING,
+    total_likes: DataTypes.INTEGER,
+    total_views: DataTypes.INTEGER,
+    total_whistlists: DataTypes.INTEGER,
+    reading_time: DataTypes.INTEGER,
     
   }, {
     sequelize,
     modelName: 'Article',
+    tableName:'articles',
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    
   });
   return Article;
 };
