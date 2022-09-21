@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Article.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     topic_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     title: DataTypes.STRING,

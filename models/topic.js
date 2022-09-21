@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Topic.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     topic: DataTypes.STRING,
     status: DataTypes.STRING,
   }, {
