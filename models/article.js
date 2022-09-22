@@ -11,10 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Article.belongsTo(models.Topic,{
-      //     foreignKey:'id',
-      //     as:'topic'
-      // })
+      Article.belongsTo(models.Topic,{
+          foreignKey:'id',
+          as:'categories'
+      })
+
+      Article.belongsTo(models.User,{
+        foreignKey:'id',
+        as:'author'
+      })
     }
   }
   Article.init({
@@ -23,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
+
     topic_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     title: DataTypes.STRING,

@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Article,{
+        foreignKey:'user_id',
+        as:'article'
+      })
     }
   }
   User.init({
@@ -19,25 +23,24 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
-    uuid: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    is_verified: DataTypes.BOOLEAN,
-    gender: DataTypes.STRING,
-    slug: DataTypes.STRING,
-    occupation: DataTypes.STRING,
+      uuid: DataTypes.STRING,
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      avatar: DataTypes.STRING,
+      username: DataTypes.STRING,
+      password: DataTypes.STRING,
+      phone: DataTypes.STRING,
+      is_verified: DataTypes.BOOLEAN,
+      gender: DataTypes.STRING,
+      slug: DataTypes.STRING,
+      occupation: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',
     tableName: 'users',
     createdAt: "created_at",
     updatedAt: "updated_at",
-    
   });
   return User;
 };

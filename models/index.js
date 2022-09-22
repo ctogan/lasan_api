@@ -32,7 +32,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.user = require("../models/user.js")(sequelize, Sequelize);
-db.role = require("../models/role.js")(sequelize, Sequelize);
+
 
 
 

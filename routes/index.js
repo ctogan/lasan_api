@@ -3,8 +3,8 @@ var router = express.Router();
 
 const articleController = require('../controllers').article;
 const topicController = require('../controllers').topic;
-const verifySignUpController = require('../controllers').verifySignUp;
-const verifySignController = require('../controllers').verifySign;
+const validateUser = require('../middleware/verifySignUp');
+const userController = require('../controllers').user;
 const statusController = require('../controllers').status;
 const verifyJwtTokenController = require('../controllers').verifyJwtToken;
 const userTopicController = require('../controllers').usertopic;
@@ -13,6 +13,14 @@ const userTopicController = require('../controllers').usertopic;
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+//User
+router.post('/api/auth/signup',[
+	validateUser.checkDuplicateUserNameOrEmail
+],
+userController.signup);
+
+router.post('/api/auth/signin', userController.signin);
 
 //Article
 router.get('/api/article', articleController.list);
@@ -35,15 +43,7 @@ router.post('/api/user/topic/add', userTopicController.add);
 
 // module.exports = function (app) {
 
-//User Auth
-router.post('/api/auth/signup',[
-		verifySignUpController.checkDuplicateUserNameOrEmail,
-		verifySignUpController.checkRolesExisted
-	],
-verifySignController.signup);
 
-router.post('/api/auth/signin', verifySignController.signin);
 
-// }
 
 module.exports = router;

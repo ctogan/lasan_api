@@ -6,6 +6,15 @@ const Role = require('../models').Role
 const Op = db.Sequelize.Op;
 const config_roles = require('../config/configRoles');
 const uuid = require('uuid');
+const slugify = require('slugify')
+const options = {
+  replacement: '-',
+  remove: undefined,
+  lower: true,
+  strict: false,
+  locale: 'en',
+  trim: true,
+}
 
 module.exports = {
 	signup(req, res) {
@@ -14,51 +23,18 @@ module.exports = {
                 uuid: uuid.v4(),
                 first_name: req.body.firstname,
                 last_name: req.body.lastname,
+                avatar: req.body.avatar,
                 username: req.body.username,
 				email: req.body.email,
+                password: bcrypt.hashSync(req.body.password, 8),
                 phone: req.body.phone,
+                is_verified:false,
+                slug: slugify(req.body.username, options),
                 gender: req.body.gender,
-				password: bcrypt.hashSync(req.body.password, 8)
-			}).then(data => {
-
-				Role.findAll({
-					where: {
-						name: {
-							[Op.or]: req.body.roles
-						}
-					}
-				}).then(roles => {
-
-					res.status(200).send({
-						auth: true,
-						id: req.body.id,
-						message: roles,
-						errors: null,
-					});
-					// data.setRoles(roles).then(() => {
-					// 	res.status(200).send({
-					// 		auth: true,
-					// 		id: req.body.id,
-					// 		message: "User registered successfully!",
-					// 		errors: null,
-					// 	});
-					// });
-				}).catch(err => {
-					res.status(500).send({
-						auth: false,
-						message: "Error add Roles",
-						errors: err
-					});
-				});
-				
-			}).catch(err => {
-				res.status(500).send({
-					auth: false,
-					id: req.body.id,
-					message: "Error",
-					errors: err
-				});
+                occupation:req.body.occupation
 			})
+            .then((User) => res.status(201).send(User))
+            .catch((error) => res.status(400).send(error));
 	},
 
 	signin(req, res) {
