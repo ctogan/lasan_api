@@ -67,24 +67,55 @@ module.exports = {
         .catch((error) => res.status(400).send(error));
     },
 
-    getById(req, res) {
-        return Article
-          .findByPk(req.params.id, {
-            include: [{
-              model: Topic,
-              as: 'topic'
-            }],
-          })
-          .then((Article) => {
-            if (!Article) {
-              return res.status(404).send({
-                message: 'Article Not Found',
-              });
-            }
-            return res.status(200).send(Article);
-          })
-          .catch((error) => res.status(400).send(error));
-      },
+    // get_detail(req, res) {
+    //     return Article
+    //       .findOne(req.params.slug, {
+    //         where:{
+    //           slug:req.params.slug
+    //         },
+    //         include: [{
+    //           model: Topic,
+    //           as: 'topic'
+    //         }],
+    //       })
+    //       .then((Article) => {
+    //         if (!Article) {
+    //           return res.status(404).send({
+    //             message: 'Article Not Found',
+    //           });
+    //         }
+    //         return res.status(200).send(Article);
+    //       })
+    //       .catch((error) => res.status(400).send(error));
+    //   },
+
+    get_detail(req, res) {
+      return Article
+        .findByPk(req.params.id, {
+          include: [],
+        })
+        .then((data) => {
+          if (!data) {
+            return res.status(404).send({
+              status: false,
+              message: 'Article Not Found',
+            });
+          }
+          const article = {
+            status: true,
+            message: data,
+            errors: null
+          }
+          return res.status(200).send(data);
+        })
+        .catch((error) => {
+          res.status(400).send({
+            status: false,
+            message: 'Bad Request',
+            errors: error
+          });
+        });
+    },
       
       recommended(req, res) {
         return Article

@@ -24,11 +24,13 @@ router.post('/api/auth/signin', userController.signin);
 
 //Article
 router.get('/api/article', articleController.list);
+router.get('/api/article/:id', articleController.get_detail);
+
 router.get('/api/article/get/recommended', articleController.recommended);
 router.get('/api/article/get/selected', articleController.selected);
 router.get('/api/article/get/newest', articleController.newest);
 router.get('/api/article/get/popular', articleController.popular);
-router.post('/api/article/get/id', articleController.getById);
+// router.post('/api/article/get/id', articleController.getById);
 router.post('/api/article/add',[validateToken.verifyToken], articleController.add);
 
 
