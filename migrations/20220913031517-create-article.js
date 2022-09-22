@@ -46,6 +46,12 @@ module.exports = {
       },
       reading_time:{
         type: Sequelize.INTEGER
+      },
+      created_at: {
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        type: Sequelize.DATE
       }
     });
   },

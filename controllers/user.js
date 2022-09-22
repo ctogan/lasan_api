@@ -71,18 +71,7 @@ module.exports = {
 					id: user.id
 				}, config_roles.secret, {
 					expiresIn: 86400 //24h expired
-				});
-
-				// user.getRoles().then(roles => {
-				// 	res.status(200).send({
-				// 	  id: user.id,
-				// 	  username: user.username,
-				// 	  email: user.email,
-				// 	  roles: roles,
-				// 	  accessToken: token
-				// 	});
-				// });
-			
+				});	
 				res.status(200).send({
 					auth: true,
 					email: req.body.email,

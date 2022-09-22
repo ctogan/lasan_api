@@ -13,6 +13,12 @@ module.exports = {
       },
       author_id: {
         type: Sequelize.INTEGER
+      },
+      created_at: {
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        type: Sequelize.DATE
       }
     });
   },

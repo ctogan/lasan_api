@@ -3,10 +3,10 @@ var router = express.Router();
 
 const articleController = require('../controllers').article;
 const topicController = require('../controllers').topic;
-const validateUser = require('../middleware/verifySignUp');
 const userController = require('../controllers').user;
 const statusController = require('../controllers').status;
-const verifyJwtTokenController = require('../controllers').verifyJwtToken;
+const validateUser = require('../middleware/verifySignUp');
+const validateToken = require('../middleware/verifyJwtToken');
 const userTopicController = require('../controllers').usertopic;
 
 /* GET home page. */
@@ -29,7 +29,7 @@ router.get('/api/article/get/selected', articleController.selected);
 router.get('/api/article/get/newest', articleController.newest);
 router.get('/api/article/get/popular', articleController.popular);
 router.post('/api/article/get/id', articleController.getById);
-router.post('/api/article/add', articleController.add);
+router.post('/api/article/add',[validateToken.verifyToken], articleController.add);
 
 
 

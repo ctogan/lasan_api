@@ -50,7 +50,7 @@ module.exports = {
         return Article
         .create({
             topic_id          : req.body.topic_id,
-            user_id           : req.body.user_id,
+            user_id           : req.userId,
             title             : req.body.title,
             subtitle          : req.body.subtitle,
             article           : req.body.article,
