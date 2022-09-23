@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey:'topic_id',
           as:'article'
       })
-      // Topic.hasMany(models.userTopic,{
-      //   foreignKey:'topic_id',
-      //   as:'usertopic'
-      // })
+      Topic.hasMany(models.userTopic,{
+        foreignKey:'topic_id',
+        as:'usertopic'
+      })
 
     }
   }
