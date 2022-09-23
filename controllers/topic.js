@@ -1,5 +1,7 @@
+const { subscribe } = require('../routes');
 
 const Topic = require('../models').Topic;
+const UserTopic = require('../models').UserTopic;
 
 module.exports = {
     list(req,res){
@@ -16,12 +18,12 @@ module.exports = {
     add(req,res){
         return Topic
         .create({
-            id: req.body.id,
             topic : req.body.topic,
             status : req.body.status,
         })
         .then((topic) => res.status(201).send(topic))
         .catch((error) => res.status(400).send(error));
-    }
+    },
+   
 
 }

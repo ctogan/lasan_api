@@ -6,6 +6,15 @@ module.exports = {
 	verifyToken(req,res,next){
 
 		let tokenHeader = req.headers['x-access-token'];
+		if(!tokenHeader){
+			return res.status(500).send({
+				code    : 200,
+				status  : false,
+				message : 'Unauthorize user',
+				data    : []
+			});
+			
+		} 
 
 		if (tokenHeader.split(' ')[0] !== 'Bearer') {
 			return res.status(500).send({
