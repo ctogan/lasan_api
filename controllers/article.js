@@ -23,12 +23,18 @@ module.exports = {
             {
               model: Topic,
               as: 'categories',
-              attributes: [['topic','topic_name']],
+              attributes: [
+                ['topic','topic_name']
+              ],
             },
             {
               model: User,
               as: 'author',
-              attributes: [['topic','topic_name']],
+              attributes: [
+                ['first_name','name'],
+                ['avatar','profile_picture'],
+                'occupation'
+              ],
             },
         ],
           order:[
@@ -91,7 +97,7 @@ module.exports = {
         .then((data) => {
           if (!data) {
             return res.status(404).send({
-              code    : 404,
+              code    : 200,
               status  : false,
               message : 'Article Not Found',
               data    : []
@@ -99,7 +105,8 @@ module.exports = {
           }
           const results = {
             status: true,
-            message: data,
+            message: 'success',
+            data    : data,
             errors: null
           }
           return res.status(200).send(results);
