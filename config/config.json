@@ -1,11 +1,10 @@
 {
   "development": {
-    "username": "sambilngopi_user",
-    "password": "ctree.id",
-    "database": "santaiajadb",
-    "host": "lagisantai.ctkhbixs0dna.ap-southeast-1.rds.amazonaws.com",
+    "username": "postgres",
+    "password": "",
+    "database": "santai",
+    "host": "127.0.0.1",
     "dialect": "postgres"
-    
   },
   "test": {
     "username": "sambilngopi_user",
