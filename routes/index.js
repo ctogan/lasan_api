@@ -24,8 +24,7 @@ router.post('/api/auth/signin', userController.signin);
 
 //Article
 router.get('/api/article', articleController.list);
-router.post('/api/article/detail', articleController.get_detail);
-
+router.get('/api/article/:id', articleController.get_detail);
 
 router.get('/api/article/get/recommended', articleController.recommended);
 router.get('/api/article/get/selected', articleController.selected);
@@ -38,11 +37,11 @@ router.post('/api/article/add',[validateToken.verifyToken], articleController.ad
 
 //Topic
 router.get('/api/topic', topicController.list);
-router.post('/api/topic/add', topicController.add);
+router.post('/api/topic/add',[validateToken.verifyToken], topicController.add);
 
 //UserTopic
 router.get('/api/user/topic', userTopicController.list);
-router.post('/api/user/topic/add', userTopicController.add);
+router.post('/api/user/topic/add',[validateToken.verifyToken],userTopicController.add);
 
 // module.exports = function (app) {
 

@@ -21,11 +21,10 @@ module.exports = {
     add(req,res){
         return UserTopic
         .create({
-
             topic_id : req.body.topic_id,
-            user_id : req.body.user_id,
+            user_id : req.userId,
         })
-        .then((UserTopic) => res.status(201).send(UserTopic))
+        .then((usertopic) => res.status(201).send(usertopic))
         .catch((error) => res.status(400).send(error));
     }
 

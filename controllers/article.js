@@ -135,18 +135,10 @@ module.exports = {
         .catch((error)=>{res.status(400).send(error);});
       },
       selected(req, res) {
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
+        
+          
+
+
       },
 
       newest(req, res){
