@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     total_likes: DataTypes.INTEGER,
     total_views: DataTypes.INTEGER,
     total_whistlists: DataTypes.INTEGER,
+    total_comments: DataTypes.INTEGER,
     reading_time: DataTypes.INTEGER,
     
   }, {

@@ -2,9 +2,9 @@
 const Article = require('../models').Article;
 const Topic = require('../models').Topic;
 const User = require('../models').User;
-
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
+
 const options = {
   replacement: '-',
   remove: undefined,
@@ -13,7 +13,6 @@ const options = {
   locale: 'en',
   trim: true,
 }
-
 
 module.exports = {
     list(req,res){
@@ -24,6 +23,11 @@ module.exports = {
             {
               model: Topic,
               as: 'categories',
+              attributes: [['topic','topic_name']],
+            },
+            {
+              model: User,
+              as: 'author',
               attributes: [['topic','topic_name']],
             },
         ],
@@ -53,9 +57,10 @@ module.exports = {
             image             : req.body.image,
             status            : req.body.status,
             slug              : slugify(req.body.title, options),
-            total_likes       : req.body.total_likes,
-            total_views       : req.body.total_views,
-            total_whistlists  : req.body.total_whistlists,
+            total_likes       : 0,
+            total_views       : 0,
+            total_whistlists  : 0,
+            total_comments    : 0,
             reading_time      : req.body.reading_time,
 
         })
@@ -64,19 +69,24 @@ module.exports = {
     },
 
     get_detail(req, res) {
-      
+    
       return Article
-        .findOne(req.params.slug, {
+        .findOne({
+          where: {
+            slug: req.body.slug,
+           },
           include: [
              {
               model: Topic,
               as: 'categories',
               attributes: [['topic','topic_name']],
             },
+            {
+              model: User,
+              as: 'author',
+              // attributes: [['name','avatar','occupation']],
+            },
           ],
-          where: {
-            slug: req.params.slug,
-           },
         })
         .then((data) => {
           if (!data) {
@@ -87,12 +97,12 @@ module.exports = {
               data    : []
             });
           }
-          const article = {
+          const results = {
             status: true,
             message: data,
             errors: null
           }
-          return res.status(200).send(data);
+          return res.status(200).send(results);
         })
         .catch((error) => {
           res.status(400).send({
