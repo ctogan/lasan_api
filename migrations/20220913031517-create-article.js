@@ -44,6 +44,9 @@ module.exports = {
       total_whistlists:{
         type: Sequelize.INTEGER
       },
+      total_comments:{
+        type: Sequelize.INTEGER
+      },
       reading_time:{
         type: Sequelize.INTEGER
       },

@@ -4,17 +4,20 @@ const Topic = require('../models').Topic;
 
 module.exports = {
     list(req,res){
+        // console.log("testing");
         return UserTopic
         .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
+            include:[
+                // {
+                //     model: Topic,
+                //     as: 'topic'
+                // }
+            ],
             order:[
-                ['createdAt','DESC']
+                ['created_at','DESC']
             ]
         })
-        .then((UserTopic)=> res.status(200).send(UserTopic))
+        .then((usertopic)=> res.status(200).send(usertopic))
         .catch((error)=>{res.status(400).send(error);});
     },
     
