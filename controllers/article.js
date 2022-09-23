@@ -26,11 +26,6 @@ module.exports = {
               as: 'categories',
               attributes: [['topic','topic_name']],
             },
-            // {
-            //   model: User,
-            //   as: 'author',
-            //   required:false
-            // }
         ],
           order:[
               ['created_at','DESC']
@@ -41,6 +36,7 @@ module.exports = {
           'code'    : 200,
           "status"  : "true",
           "message" : "success",
+          "auth"    : req.userId,
           'data'    : Article,
 
         }))
@@ -67,38 +63,28 @@ module.exports = {
         .catch((error) => res.status(400).send(error));
     },
 
-    // get_detail(req, res) {
-    //     return Article
-    //       .findOne(req.params.slug, {
-    //         where:{
-    //           slug:req.params.slug
-    //         },
-    //         include: [{
-    //           model: Topic,
-    //           as: 'topic'
-    //         }],
-    //       })
-    //       .then((Article) => {
-    //         if (!Article) {
-    //           return res.status(404).send({
-    //             message: 'Article Not Found',
-    //           });
-    //         }
-    //         return res.status(200).send(Article);
-    //       })
-    //       .catch((error) => res.status(400).send(error));
-    //   },
-
     get_detail(req, res) {
+      
       return Article
-        .findByPk(req.params.id, {
-          include: [],
+        .findOne(req.params.slug, {
+          include: [
+             {
+              model: Topic,
+              as: 'categories',
+              attributes: [['topic','topic_name']],
+            },
+          ],
+          where: {
+            slug: req.params.slug,
+           },
         })
         .then((data) => {
           if (!data) {
             return res.status(404).send({
-              status: false,
-              message: 'Article Not Found',
+              code    : 404,
+              status  : false,
+              message : 'Article Not Found',
+              data    : []
             });
           }
           const article = {
