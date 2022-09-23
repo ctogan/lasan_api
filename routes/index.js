@@ -24,7 +24,7 @@ router.post('/api/auth/signin', userController.signin);
 
 //Article
 router.get('/api/article', articleController.list);
-router.get('/api/article/:id', articleController.get_detail);
+router.post('/api/article/detail', articleController.get_detail);
 
 router.get('/api/article/get/recommended', articleController.recommended);
 router.get('/api/article/get/selected', articleController.selected);

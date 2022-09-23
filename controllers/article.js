@@ -90,13 +90,17 @@ module.exports = {
             {
               model: User,
               as: 'author',
-              // attributes: [['name','avatar','occupation']],
+              attributes: [
+                ['first_name','name'],
+                ['avatar','profile_picture'],
+                'occupation'
+              ],
             },
           ],
         })
         .then((data) => {
           if (!data) {
-            return res.status(404).send({
+            return res.status(200).send({
               code    : 200,
               status  : false,
               message : 'Article Not Found',
