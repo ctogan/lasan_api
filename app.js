@@ -57,7 +57,6 @@ db.sequelize.sync().then(() => {
   app.listen(port, () => console.log(title + " run on " + baseUrl))
 });
 
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sum', sumRouter);
