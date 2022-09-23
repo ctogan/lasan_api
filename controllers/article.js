@@ -123,7 +123,46 @@ module.exports = {
           });
         });
     },
-      
+      trending(req,res){
+        return Article
+        .findAll({
+          attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
+          include:[
+            {
+              model: Topic,
+              as: 'categories',
+              attributes: [
+                ['topic','topic_name']
+              ],
+            },
+            {
+              model: User,
+              as: 'author',
+              attributes: [
+                ['first_name','name'],
+                ['avatar','profile_picture'],
+                'occupation'
+              ],
+            },
+        ],
+          limit: 4,
+          order:[
+              ['total_views','DESC'],
+              ['created_at','DESC']
+          ],
+          
+        })
+        .then((Article)=> res.status(200).send({
+         
+          'code'    : 200,
+          "status"  : "true",
+          "message" : "success",
+          "auth"    : req.userId,
+          'data'    : Article,
+
+        }))
+        .catch((error)=>{res.status(400).send(error);});
+      },
       recommended(req, res) {
         return Article
         .findAll({
