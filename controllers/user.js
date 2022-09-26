@@ -89,6 +89,9 @@ module.exports = {
 					errors: err
 				});
 			});
-	
-	}
+	},
+
+    detail(req, res) {
+
+    }
 }

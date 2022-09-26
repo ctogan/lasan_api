@@ -17,9 +17,13 @@ const options = {
 
 module.exports = {
     list(req,res){
+      let limit = 50
+      let offset = 0 + (req.body.page - 1) * limit
         return Article
-        .findAll({
+        .findAndCountAll({
           attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
+          offset: offset,
+          limit: limit,
           include:[
             {
               model: Topic,
@@ -32,13 +36,11 @@ module.exports = {
           ]
         })
         .then((Article)=> res.status(200).send({
-         
           'code'    : 200,
           "status"  : "true",
           "message" : "success",
           "auth"    : req.userId,
           'data'    : Article,
-
         }))
         .catch((error)=>{res.status(400).send(error);});
     },
@@ -66,7 +68,7 @@ module.exports = {
     get_detail(req, res) {
       
       return Article
-        .findOne(req.params.slug, {
+        .findOne( {
           include: [
              {
               model: Topic,
@@ -75,7 +77,7 @@ module.exports = {
             },
           ],
           where: {
-            slug: req.params.slug,
+            slug: req.body.slug,
            },
         })
         .then((data) => {

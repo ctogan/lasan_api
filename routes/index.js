@@ -51,7 +51,7 @@ router.post('/api/user/detail',[validateToken.verifyToken],userTopicController.a
 
 // faker 
 
-router.get('/test/faker/user', userTopicController.list);
+// router.get('/test/faker/user', userTopicController.list);
 
 
 module.exports = router;
