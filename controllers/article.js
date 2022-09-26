@@ -2,6 +2,8 @@
 const Article = require('../models').Article;
 const Topic = require('../models').Topic;
 const User = require('../models').User;
+const UserLike = require('../models').UserLike
+const UserArchive = require('../models').UserArchive
 
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
@@ -104,6 +106,27 @@ module.exports = {
             errors: error
           });
         });
+    },
+
+    like(req, res) {
+      return UserLike
+      .create({
+          user_id           : req.userId,
+          article_id        : req.body.article_id,
+
+      })
+      .then((data) => res.status(201).send(data))
+      .catch((error) => res.status(400).send(error));
+    },
+    archive(req,res){
+      return UserArchive
+      .create({
+          user_id           : req.userId,
+          article_id        : req.body.article_id,
+
+      })
+      .then((data) => res.status(201).send(data))
+      .catch((error) => res.status(400).send(error));
     },
       trending(req,res){
         return Article

@@ -23,6 +23,7 @@ userController.signup);
 router.post('/api/auth/signin', userController.signin);
 router.post('/api/user/detail',userController.detail);
 
+
 //Article
 router.get('/api/article', articleController.list);
 router.post('/api/article/detail', articleController.get_detail);
@@ -34,6 +35,12 @@ router.get('/api/articles/trendings', articleController.trending);
 router.get('/api/article/get/selected', articleController.selected);
 router.get('/api/article/get/newest', articleController.newest);
 router.get('/api/article/get/popular', articleController.popular);
+router.post('/api/article/add/like',[
+	validateToken.verifyToken
+],articleController.like);
+router.post('/api/article/add/archive',[
+	validateToken.verifyToken
+],articleController.archive);
 // router.post('/api/article/get/id', articleController.getById);
 
 

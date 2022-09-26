@@ -2,7 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../models/index');
 const User = require('../models').User
-const Role = require('../models').Role
+// const Role = require('../models').Role
+
 const Op = db.Sequelize.Op;
 const config_roles = require('../config/configRoles');
 const uuid = require('uuid');
@@ -124,5 +125,5 @@ module.exports = {
             errors: error
           });
         });
-    }
+    },
 }
