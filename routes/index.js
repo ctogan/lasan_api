@@ -45,6 +45,7 @@ router.post('/api/topic/add',[validateToken.verifyToken], topicController.add);
 //UserTopic
 router.get('/api/user/topic', [validateToken.verifyToken],userTopicController.list);
 router.post('/api/user/topic/add',[validateToken.verifyToken],userTopicController.add);
+router.post('/api/user/detail',[validateToken.verifyToken],userTopicController.add);
 
 // module.exports = function (app) {
 
