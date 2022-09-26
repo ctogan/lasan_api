@@ -2,9 +2,9 @@
 const Article = require('../models').Article;
 const Topic = require('../models').Topic;
 const User = require('../models').User;
+
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
-
 const options = {
   replacement: '-',
   remove: undefined,
@@ -13,6 +13,7 @@ const options = {
   locale: 'en',
   trim: true,
 }
+
 
 module.exports = {
     list(req,res){
@@ -23,18 +24,7 @@ module.exports = {
             {
               model: Topic,
               as: 'categories',
-              attributes: [
-                ['topic','topic_name']
-              ],
-            },
-            {
-              model: User,
-              as: 'author',
-              attributes: [
-                ['first_name','name'],
-                ['avatar','profile_picture'],
-                'occupation'
-              ],
+              attributes: [['topic','topic_name']],
             },
         ],
           order:[
@@ -63,10 +53,9 @@ module.exports = {
             image             : req.body.image,
             status            : req.body.status,
             slug              : slugify(req.body.title, options),
-            total_likes       : 0,
-            total_views       : 0,
-            total_whistlists  : 0,
-            total_comments    : 0,
+            total_likes       : req.body.total_likes,
+            total_views       : req.body.total_views,
+            total_whistlists  : req.body.total_whistlists,
             reading_time      : req.body.reading_time,
 
         })
@@ -75,45 +64,35 @@ module.exports = {
     },
 
     get_detail(req, res) {
-    
+      
       return Article
-        .findOne({
-          where: {
-            slug: req.body.slug,
-           },
+        .findOne(req.params.slug, {
           include: [
              {
               model: Topic,
               as: 'categories',
               attributes: [['topic','topic_name']],
             },
-            {
-              model: User,
-              as: 'author',
-              attributes: [
-                ['first_name','name'],
-                ['avatar','profile_picture'],
-                'occupation'
-              ],
-            },
           ],
+          where: {
+            slug: req.params.slug,
+           },
         })
         .then((data) => {
           if (!data) {
             return res.status(200).send({
               code    : 200,
-              status  : false,
+              status  : 'error',
               message : 'Article Not Found',
               data    : []
             });
           }
-          const results = {
+          const article = {
             status: true,
-            message: 'success',
-            data    : data,
+            message: data,
             errors: null
           }
-          return res.status(200).send(results);
+          return res.status(200).send(data);
         })
         .catch((error) => {
           res.status(400).send({
@@ -178,10 +157,18 @@ module.exports = {
         .catch((error)=>{res.status(400).send(error);});
       },
       selected(req, res) {
-        
-          
-
-
+        return Article
+        .findAll({
+            include:[{
+                model: Topic,
+                as: 'topic'
+              }],
+            order:[
+                ['createdAt','DESC']
+            ]
+        })
+        .then((Article)=> res.status(200).send(Article))
+        .catch((error)=>{res.status(400).send(error);});
       },
 
       newest(req, res){
