@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-     
+      userTopic.belongsTo(models.Topic,{
+        foreignKey:'id',
+        as:'categories'
+      })
     }
   }
   userTopic.init({
