@@ -69,6 +69,7 @@ module.exports = {
       
       return Article
         .findOne( {
+          attributes: {exclude: ['id']},
           include: [
              {
               model: Topic,

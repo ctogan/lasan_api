@@ -93,5 +93,36 @@ module.exports = {
 
     detail(req, res) {
 
+        return User
+        .findOne( {
+          attributes: {exclude: ['id']},
+          include: [],
+          where: {
+            uuid: req.body.uuid,
+           },
+        })
+        .then((data) => {
+          if (!data) {
+            return res.status(200).send({
+              code    : 200,
+              status  : 'error',
+              message : 'User Not Found',
+              data    : []
+            });
+          }
+          const result = {
+            status: true,
+            message: data,
+            errors: null
+          }
+          return res.status(200).send(result);
+        })
+        .catch((error) => {
+          res.status(400).send({
+            status: false,
+            message: 'Bad Request',
+            errors: error
+          });
+        });
     }
 }
