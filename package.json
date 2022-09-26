@@ -26,5 +26,8 @@
     "swagger-ui-express": "^4.5.0",
     "uuid": "^9.0.0",
     "uuid-by-string": "^4.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0"
   }
 }

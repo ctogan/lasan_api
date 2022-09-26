@@ -48,7 +48,9 @@ router.post('/api/user/topic/add',[validateToken.verifyToken],userTopicControlle
 
 // module.exports = function (app) {
 
+// faker 
 
+router.get('/test/faker/user', userTopicController.list);
 
 
 module.exports = router;

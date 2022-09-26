@@ -80,9 +80,9 @@ module.exports = {
         })
         .then((data) => {
           if (!data) {
-            return res.status(404).send({
-              code    : 404,
-              status  : false,
+            return res.status(200).send({
+              code    : 200,
+              status  : 'error',
               message : 'Article Not Found',
               data    : []
             });
