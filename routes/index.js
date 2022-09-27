@@ -29,6 +29,7 @@ router.get('/api/article', articleController.list);
 router.post('/api/article/detail', articleController.get_detail);
 router.post('/api/article/add',[validateToken.verifyToken], articleController.add);
 router.get('/api/articles/trendings', articleController.trending);
+// router.get('/api/articles/short/trendings', articleController.trending);
 
 
 

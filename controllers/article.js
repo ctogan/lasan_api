@@ -129,13 +129,11 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
     },
       trending(req,res){
-        let limit = 20
-        let offset = 0 + (req.body.page - 1) * limit
+    
         return Article
-        .findAndCountAll({
-          attributes: ['slug','user_id','title',['created_at','date'],'image',['reading_time','read_calculation']],
-          offset: offset,
-          limit: limit,
+        .findAll({
+          attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
+          limit: 4,
           include:[
             {
               model: Topic,
