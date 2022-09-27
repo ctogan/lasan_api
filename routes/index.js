@@ -22,6 +22,7 @@ userController.signup);
 
 router.post('/api/auth/signin', userController.signin);
 router.post('/api/user/detail',userController.detail);
+router.get('/api/user/profile',[validateToken.verifyToken],userController.profile);
 
 
 //Article

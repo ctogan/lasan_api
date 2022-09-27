@@ -38,7 +38,6 @@ module.exports = {
             .then((User) => res.status(201).send(User))
             .catch((error) => res.status(400).send(error));
 	},
-
 	signin(req, res) {
 		return User
 			.findOne({
@@ -92,16 +91,7 @@ module.exports = {
 				});
 			});
 	},
-
-	article_list(req,res){
-		let limit = 20
-		let offset = 0 + (req.body.page - 1) * limit
-		Article.findAll({
-			attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
-		})	
-	},
     detail(req, res) {
-
         return User
         .findOne( {
           attributes: {exclude: ['id']},
@@ -134,4 +124,34 @@ module.exports = {
           });
         });
     },
+	profile(req,res){
+		User.findOne({
+			attributes:{exclude:['id']},
+			where:{
+				id: req.userId,
+			},
+
+		}).then((data) => {
+			if (!data) {
+				return res.status(200).send({
+				  code    : 200,
+				  status  : 'error',
+				  message : 'User Not Found',
+				  data    : []
+				});
+			  }
+			  const result = {
+				status: true,
+				message: data,
+				errors: null
+			  }
+			  return res.status(200).send(result);
+		}).catch((error) => {
+			res.status(400).send({
+				status: false,
+				message: 'Bad Request',
+				errors: error
+			});
+		});
+	}
 }

@@ -24,7 +24,7 @@ module.exports = {
       let offset = 0 + (req.query.page - 1) * limit
         return Article
         .findAndCountAll({
-          attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
+          attributes: ['slug','title','subtitle',['created_at','date'],'image',['reading_time','read_calculation'],['total_likes','likes_count'],['total_views','views_count'],['total_whistlists','wishlists_count']],
           offset: offset,
           limit: limit,
           include:[
