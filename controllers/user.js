@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../models/index');
 const User = require('../models').User
+const Article = require('../models').Article
 // const Role = require('../models').Role
 
 const Op = db.Sequelize.Op;
@@ -92,6 +93,13 @@ module.exports = {
 			});
 	},
 
+	article_list(req,res){
+		let limit = 20
+		let offset = 0 + (req.body.page - 1) * limit
+		Article.findAll({
+			attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
+		})	
+	},
     detail(req, res) {
 
         return User

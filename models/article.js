@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       Article.belongsTo(models.Topic,{
           foreignKey:'topic_id',
           as:'categories'
-      })
+      }),
 
       Article.belongsTo(models.User,{
-        foreignKey:'id',
+        foreignKey:'user_id',
         as:'author'
       })
     }
