@@ -33,6 +33,11 @@ module.exports = {
               as: 'categories',
               attributes: [['topic','topic_name']],
             },
+            {
+              model: User,
+              as: 'author',
+              attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+            },
         ],
           order:[
               ['created_at','DESC']
@@ -78,6 +83,11 @@ module.exports = {
               model: Topic,
               as: 'categories',
               attributes: [['topic','topic_name']],
+            },
+            {
+              model: User,
+              as: 'author',
+              attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
             },
           ],
           where: {
