@@ -143,7 +143,7 @@ module.exports = {
             {
               model: User,
               as: 'author',
-              attributes: ['uuid','username','avatar','occupation'],
+              attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
             },
         ],
           order:[
