@@ -19,8 +19,9 @@ const options = {
 
 module.exports = {
     list(req,res){
+      
       let limit = 20
-      let offset = 0 + (req.params.page - 1) * limit
+      let offset = 0 + (req.query.page - 1) * limit
         return Article
         .findAndCountAll({
           attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
