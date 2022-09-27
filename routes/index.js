@@ -44,8 +44,6 @@ router.post('/api/article/add/archive',[
 // router.post('/api/article/get/id', articleController.getById);
 
 
-
-
 //Topic
 router.get('/api/topic', topicController.list);
 router.post('/api/topic/add',[validateToken.verifyToken], topicController.add);
