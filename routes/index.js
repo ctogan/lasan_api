@@ -15,15 +15,13 @@ router.get('/', function(req, res, next) {
 });
 
 //User
-router.post('/api/auth/signup',[
-	validateUser.checkDuplicateUserNameOrEmail
-],
-userController.signup);
-
+router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],userController.signup);
 router.post('/api/auth/signin', userController.signin);
 router.get('/api/user/profile/:uuid',userController.detail);
 router.get('/api/user/my-profile',[validateToken.verifyToken],userController.profile);
-// router.get('/api/user/:uuid',userController.detail);
+router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
+router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
+
 
 
 //Article
@@ -38,10 +36,14 @@ router.get('/api/article/get/popular', articleController.popular);
 router.post('/api/article/add/like',[
 	validateToken.verifyToken
 ],articleController.like);
+
+
+
 router.post('/api/article/add/archive',[
 	validateToken.verifyToken
 ],articleController.archive);
-// router.post('/api/article/get/id', articleController.getById);
+
+router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
 
 
 //Topic

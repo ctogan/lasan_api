@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../models/index');
 const User = require('../models').User
 const Article = require('../models').Article
+const UserFollow = require('../models').UserFollows
 // const Role = require('../models').Role
 
 const Op = db.Sequelize.Op;
@@ -164,5 +165,57 @@ module.exports = {
 				errors: error
 			});
 		});
-	}
+	},
+
+	follow(req,res){
+		return UserFollow
+		.create({
+			user_id           	: req.userId,
+			author_id        	: req.body.author_id,
+		})
+		.then((data) => res.status(201).send(data))
+		.catch((error) => res.status(400).send(error));
+	},
+	unfollow(req,res){
+
+		 return UserFollow
+		 .findOne( {
+		   where: {
+				user_id           	: req.userId,
+				author_id        	: req.body.author_id,
+			},
+		 })
+		 .then((data) => {
+
+		   if (!data) {
+			 return res.status(200).send({
+			   code    : 200,
+			   status  : 'error',
+			   message : 'data not found',
+			   data    : []
+			 });
+		   }
+			UserFollow.destroy({
+				where :{
+					user_id 	: req.userId,
+					author_id 	: req.body.author_id,
+				}
+		   })
+
+		   return res.status(200).send({
+				code    : 200,
+				status  : 'success',
+				message : 'data deleted',
+				data    : []
+		   });
+		 })
+		 .catch((error) => {
+		   res.status(400).send({
+			 status: false,
+			 message: 'Bad Request',
+			 errors: error
+		   });
+		 });
+	},
+
 }
