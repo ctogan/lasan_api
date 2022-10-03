@@ -21,8 +21,9 @@ router.post('/api/auth/signup',[
 userController.signup);
 
 router.post('/api/auth/signin', userController.signin);
-router.post('/api/user/detail',userController.detail);
-router.get('/api/user/profile',[validateToken.verifyToken],userController.profile);
+router.get('/api/user/profile/:uuid',userController.detail);
+router.get('/api/user/my-profile',[validateToken.verifyToken],userController.profile);
+// router.get('/api/user/:uuid',userController.detail);
 
 
 //Article
@@ -31,9 +32,6 @@ router.post('/api/article/detail', articleController.get_detail);
 router.post('/api/article/add',[validateToken.verifyToken], articleController.add);
 router.get('/api/articles/trendings', articleController.trending);
 // router.get('/api/articles/short/trendings', articleController.trending);
-
-
-
 router.get('/api/article/get/selected', articleController.selected);
 router.get('/api/article/get/newest', articleController.newest);
 router.get('/api/article/get/popular', articleController.popular);

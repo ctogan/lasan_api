@@ -52,6 +52,7 @@ module.exports = {
         }))
         .catch((error)=>{res.status(400).send(error);});
     },
+
     add(req,res){
         return Article
         .create({
@@ -139,37 +140,37 @@ module.exports = {
       .then((data) => res.status(201).send(data))
       .catch((error) => res.status(400).send(error));
     },
-      trending(req,res){
-    
-        return Article
-        .findAll({
-          attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
-          limit: 4,
-          include:[
-            {
-              model: Topic,
-              as: 'categories',
-              attributes: [['topic','topic_name']],
-            },
-            {
-              model: User,
-              as: 'author',
-              attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
-            },
-        ],
-          order:[
-              ['created_at','DESC']
-          ]
-        })
-        .then((Article)=> res.status(200).send({
-          'code'    : 200,
-          "status"  : "true",
-          "message" : "success",
-          "auth"    : req.userId,
-          'data'    : Article,
-        }))
-        .catch((error)=>{res.status(400).send(error);});
-      },
+    trending(req,res){
+  
+      return Article
+      .findAll({
+        attributes: ['slug','title',['created_at','date'],'image',['reading_time','read_calculation']],
+        limit: 4,
+        include:[
+          {
+            model: Topic,
+            as: 'categories',
+            attributes: [['topic','topic_name']],
+          },
+          {
+            model: User,
+            as: 'author',
+            attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+          },
+      ],
+        order:[
+            ['created_at','DESC']
+        ]
+      })
+      .then((Article)=> res.status(200).send({
+        'code'    : 200,
+        "status"  : "true",
+        "message" : "success",
+        "auth"    : req.userId,
+        'data'    : Article,
+      }))
+      .catch((error)=>{res.status(400).send(error);});
+    },
 
       recommended(req, res) {
         return Article
@@ -228,6 +229,9 @@ module.exports = {
         })
         .then((Article)=> res.status(200).send(Article))
         .catch((error)=>{res.status(400).send(error);});
+      },
+      add_comment(req,res){
+        
       }      
 
 }

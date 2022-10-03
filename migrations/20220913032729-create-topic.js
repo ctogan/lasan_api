@@ -15,6 +15,9 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      slug: {
+        type: Sequelize.STRING
+      },
       created_at: {
         type: Sequelize.DATE
       },
@@ -34,8 +37,9 @@ function fakeTopic(count){
   const data = [];
   for (let i = 0; i < count; i++) {
     const rowItem = {
-        topic : faker.word.adjective(20),
-        status : 'active',
+        topic             : faker.word.adjective(20),
+        status            : 'active',
+        slug              : faker.lorem.slug(10),
         created_at        : faker.date.between(),
         updated_at        : faker.date.between()
     }

@@ -91,39 +91,7 @@ module.exports = {
 				});
 			});
 	},
-    detail(req, res) {
-        return User
-        .findOne( {
-          attributes: {exclude: ['id']},
-          include: [],
-          where: {
-            uuid: req.body.uuid,
-           },
-        })
-        .then((data) => {
-          if (!data) {
-            return res.status(200).send({
-              code    : 200,
-              status  : 'error',
-              message : 'User Not Found',
-              data    : []
-            });
-          }
-          const result = {
-            status: true,
-            message: data,
-            errors: null
-          }
-          return res.status(200).send(result);
-        })
-        .catch((error) => {
-          res.status(400).send({
-            status: false,
-            message: 'Bad Request',
-            errors: error
-          });
-        });
-    },
+   
 	profile(req,res){
 		User.findOne({
 			attributes:{exclude:['id']},
@@ -141,13 +109,56 @@ module.exports = {
 				});
 			  }
 			  const result = {
+				code    : 200,
 				status: true,
-				message: data,
+				message: 'Success',
+				data    : data,
 				errors: null
 			  }
 			  return res.status(200).send(result);
 		}).catch((error) => {
 			res.status(400).send({
+				status: false,
+				message: 'Bad Request',
+				errors: error
+			});
+		});
+	},
+	detail(req,res){
+		// console.log(req.userId);
+		
+		User.findOne({
+			attributes:{exclude:['id']},
+			where:{
+				uuid: req.params.uuid,
+			},
+
+		}).then((data) => {
+			if (!data) {
+				return res.status(200).send({
+				  code    : 200,
+				  status  : 'error',
+				  message : 'User Not Found',
+				  data    : []
+				});
+			  }
+			 
+
+			if(!req.userId){
+				is_auth = false;
+			 }else{
+				is_auth = true;
+			 }
+			  const result = {
+				auth : is_auth,
+				status: req.userId,
+				message: 'Success' ,
+				data:data,
+				errors: []
+			  }
+			  return res.status(200).send(result);
+		}).catch((error) => {
+			res.status(500).send({
 				status: false,
 				message: 'Bad Request',
 				errors: error

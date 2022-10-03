@@ -50,6 +50,7 @@ module.exports = {
 					});
 				}
 				req.userId = decoded.id;
+				
 				next();
 			});
 	

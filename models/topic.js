@@ -29,7 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     topic: DataTypes.STRING,
+    slug: DataTypes.STRING,
     status: DataTypes.STRING,
+
   }, {
     sequelize,
     modelName: 'Topic',
