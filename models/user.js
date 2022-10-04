@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       gender: DataTypes.STRING,
       slug: DataTypes.STRING,
       occupation: DataTypes.STRING,
+      token: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'User',

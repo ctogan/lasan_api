@@ -74,6 +74,19 @@ module.exports = {
 				}, config_roles.secret, {
 					expiresIn: 86400 //24h expired
 				});	
+
+				User.update({token: token},{
+					where:{
+						id: user.id
+				}
+
+				});
+				res.cookie('ls_token', token,{
+					httpOnly: true,
+					maxAge: 24 * 60 * 60 * 1000
+				});
+				
+
 				res.status(200).send({
 					auth: true,
 					email: req.body.email,
@@ -92,7 +105,41 @@ module.exports = {
 				});
 			});
 	},
-   
+	signout(req, res) {
+		const ls_token = req.cookies.ls_token;
+		// console.log(ls_token);
+		return User
+		.findOne({
+			where:{
+				token : ls_token
+			}
+		})
+		.then(user => {
+			User.update(
+				{
+					token: null
+				},
+				{
+				where:{
+					id: req.userId
+				}
+			}),
+			res.clearCookie('ls_token')
+			res.status(200).send({
+				auth: false,
+				message: "Logout Success",
+				errors: null
+			});
+		})
+		.catch((error)=>{
+			res.status(400).send({
+				status: false,
+				message: 'Bad Request',
+				errors: error
+			});
+		});
+
+	},
 	profile(req,res){
 		User.findOne({
 			attributes:{exclude:['id']},
@@ -173,8 +220,13 @@ module.exports = {
 			user_id           	: req.userId,
 			author_id        	: req.body.author_id,
 		})
-		.then((data) => res.status(201).send(data))
-		.catch((error) => res.status(400).send(error));
+		.then((data) => res.status(201).send({
+			code    : 200,
+			status  : 'success',
+			message : 'user follow success',
+			data    : []
+		}
+		)).catch((error) => res.status(400).send(error));
 	},
 	unfollow(req,res){
 

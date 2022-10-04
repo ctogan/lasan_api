@@ -41,6 +41,7 @@ module.exports = {
 			});
 		}
 	   try{
+			
 			jwt.verify(token, config_roles.secret, (err, decoded) => {
 				if (err) {
 					return res.status(500).send({

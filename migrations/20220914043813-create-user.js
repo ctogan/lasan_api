@@ -50,6 +50,9 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
+      token: {
+        type: Sequelize.TEXT
+      },
       created_at: {
         type: Sequelize.DATE
       },

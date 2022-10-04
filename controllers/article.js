@@ -230,8 +230,6 @@ module.exports = {
         .then((Article)=> res.status(200).send(Article))
         .catch((error)=>{res.status(400).send(error);});
       },
-      add_comment(req,res){
-        
-      }      
 
+    
 }

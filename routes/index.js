@@ -5,18 +5,23 @@ const articleController = require('../controllers').article;
 const topicController = require('../controllers').topic;
 const userController = require('../controllers').user;
 const statusController = require('../controllers').status;
+const homeController = require('../controllers').home;
 const validateUser = require('../middleware/verifySignUp');
 const validateToken = require('../middleware/verifyJwtToken');
 const userTopicController = require('../controllers').usertopic;
 
-/* GET home page. */
+/* home*/
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/api/author/recommedation', homeController.author_recommendation);
+
 
 //User
 router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],userController.signup);
 router.post('/api/auth/signin', userController.signin);
+router.delete('/api/auth/signout',[validateToken.verifyToken],userController.signout);
+
 router.get('/api/user/profile/:uuid',userController.detail);
 router.get('/api/user/my-profile',[validateToken.verifyToken],userController.profile);
 router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
@@ -39,11 +44,12 @@ router.post('/api/article/add/like',[
 
 
 
+
 router.post('/api/article/add/archive',[
 	validateToken.verifyToken
 ],articleController.archive);
 
-router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
+// router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
 
 
 //Topic
