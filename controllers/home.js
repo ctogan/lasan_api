@@ -41,6 +41,25 @@ module.exports = {
             .catch((error)=>{res.status(400).send(error);});
         }
         
+    },
+
+    list_stories(req,res){
+        const lstoken = req.cookies.lstoken;
+       
+        // if(!lstoken){
+            return Article
+            .findAll({
+              order: Sequelize.literal('random()'),
+              limit : 3
+            })
+            .then((Article)=> res.status(200).send({
+              'code'    : 200,
+              "status"  : "true",
+              "message" : "success",
+              'data'    : Article,
+            }))
+            .catch((error)=>{res.status(400).send(error);});
+        // }
     }
 
 

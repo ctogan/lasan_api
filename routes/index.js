@@ -17,6 +17,7 @@ router.get('/', function(req, res, next) {
 router.get('/api/author/recommedation', homeController.author_recommendation);
 
 
+
 //User
 router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],userController.signup);
 router.post('/api/auth/signin', userController.signin);
