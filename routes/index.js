@@ -16,7 +16,7 @@ require("./passport")(passport);
 
 
 const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client('466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com');
+const client = new OAuth2Client('466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com' , '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' , 'http://127.0.0.1:3000/login');
 
 
 
@@ -37,26 +37,29 @@ router.get('/api/author/recommedation', homeController.author_recommendation);
 // 	res.redirect("/profile/");
 // 	}
 // )
-
+router.get('/callback/url' , function(req , res){
+	console.log(req);
+	return true;
+})
 router.post("/api/auth/google", async (req, res) => {
 
-	// try {
-	// 	const response = await client.getToken(req.body.code);
-	// 	console.log('response', response);
-	//   } catch (error) {
-	// 	console.log('error', error);
-	//   }
-
-	async function verify() {
-		const ticket = await client.verifyIdToken({
-			idToken: req.body.code,
-			audience: '466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com',
-			
-		});
-		const payload = ticket.getPayload();
-		const userid = payload['sub'];
+	try {
+		const response = await client.getToken(req.body.code);
+		console.log('response', response);
+	  } catch (error) {
+		console.log('error', error);
 	  }
-	  verify().catch(console.error);
+
+	// async function verify() {
+	// 	const ticket = await client.verifyIdToken({
+	// 		idToken: req.body.code,
+	// 		audience: '466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com',
+			
+	// 	});
+	// 	const payload = ticket.getPayload();
+	// 	const userid = payload['sub'];
+	//   }
+	//   verify().catch(console.error);
 
 })
 
