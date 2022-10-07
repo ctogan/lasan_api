@@ -10,13 +10,15 @@ const validateUser = require('../middleware/verifySignUp');
 const validateToken = require('../middleware/verifyJwtToken');
 const userTopicController = require('../controllers').usertopic;
 const authController = require('../controllers').auth;
-
-const passport = require("passport");
-require("./passport")(passport);
-
-
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com' , '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' , 'http://127.0.0.1:3000/login');
+
+const passport = require("passport");
+const { user } = require('../models/user');
+const db = require('../models');
+require("./passport")(passport);
+const jwt = require('jsonwebtoken');
+const config_roles = require('../config/configRoles.js');
 
 
 
@@ -41,27 +43,43 @@ router.get('/callback/url' , function(req , res){
 	console.log(req);
 	return true;
 })
-router.post("/api/auth/google", async (req, res) => {
-
+router.post("/api/auth/google", async (req, res) => {	
 	try {
 		const response = await client.getToken(req.body.code);
-		console.log('response', response);
+		// console.log(response.tokens.id_token);
+		async function verify() {
+		const ticket = await client.verifyIdToken({
+			idToken: response.tokens.id_token,
+			audience: '466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com',
+		});
+		const { username, email, avatar, sub } = ticket.getPayload();
+
+		var token = 'Bearer ' + jwt.sign({
+			id: sub
+		}, config_roles.secret, {
+			expiresIn: 86400 //24h expired
+		});	
+
+		res.cookie('ls_token', token,{
+			httpOnly: true,
+			maxAge: 24 * 60 * 60 * 1000
+		});
+		
+
+		res.status(200).send({
+			auth: true,
+			email: email,
+			accessToken: token,
+			message: "Success",
+			errors: null
+		}); 
+	  }
+	  verify().catch(console.error);
 	  } catch (error) {
 		console.log('error', error);
 	  }
-
-	// async function verify() {
-	// 	const ticket = await client.verifyIdToken({
-	// 		idToken: req.body.code,
-	// 		audience: '466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com',
-			
-	// 	});
-	// 	const payload = ticket.getPayload();
-	// 	const userid = payload['sub'];
-	//   }
-	//   verify().catch(console.error);
-
 })
+// router.post('/api/auth/google',authController.sign_google);
 
 
 //User

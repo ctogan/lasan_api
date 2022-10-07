@@ -14,6 +14,7 @@ const options = {
   trim: true,
 }
 
+
 module.exports = {
 
     signup(req, res) {
@@ -100,6 +101,9 @@ module.exports = {
                 errors: err
             });
         });
+    },
+    sign_google(req,res){
+
     },
     signout(req, res) {
 		const ls_token = req.cookies.ls_token;
