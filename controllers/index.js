@@ -6,6 +6,7 @@ const verifySignUp = require('../middleware/verifySignUp');
 const verifyJwtToken = require('../middleware/verifyJwtToken');
 const status = require('./status');
 const usertopic = require('./usertopic');
+const auth = require('./auth');
 
 module.exports = {
     article,
@@ -16,4 +17,6 @@ module.exports = {
     usertopic,
     user,
     home,
+    auth,
+
 }

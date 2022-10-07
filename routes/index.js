@@ -9,6 +9,16 @@ const homeController = require('../controllers').home;
 const validateUser = require('../middleware/verifySignUp');
 const validateToken = require('../middleware/verifyJwtToken');
 const userTopicController = require('../controllers').usertopic;
+const authController = require('../controllers').auth;
+
+const passport = require("passport");
+require("./passport")(passport);
+
+
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client('466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com');
+
+
 
 /* home*/
 router.get('/', function(req, res, next) {
@@ -16,17 +26,49 @@ router.get('/', function(req, res, next) {
 });
 router.get('/api/author/recommedation', homeController.author_recommendation);
 
+// router.post(
+// 	"/api/auth/google",
+// 	passport.authenticate("google", { scope: ["email", "profile"] })
+// );
+// router.get(
+// 	"/auth/google/callback",
+// 	passport.authenticate({ session: false }),
+// 	(req, res) => {
+// 	res.redirect("/profile/");
+// 	}
+// )
+
+router.post("/api/auth/google", async (req, res) => {
+
+	async function verify() {
+		const ticket = await client.verifyIdToken({
+			idToken: req.body.code,
+			audience: '466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com',
+			
+		});
+		const payload = ticket.getPayload();
+		const userid = payload['sub'];
+	  }
+	  verify().catch(console.error);
+
+})
 
 
 //User
-router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],userController.signup);
-router.post('/api/auth/signin', userController.signin);
-router.delete('/api/auth/signout',[validateToken.verifyToken],userController.signout);
+router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],authController.signup);
+router.post('/api/auth/signin', authController.signin);
+router.delete('/api/auth/signout',[validateToken.verifyToken],authController.signout);
 
 router.get('/api/user/profile/:uuid',userController.detail);
 router.get('/api/user/my-profile',[validateToken.verifyToken],userController.profile);
 router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
 router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
+
+router.get(
+	"/api/auth/google",
+	passport.authenticate("google", { scope: ["email", "profile"] })
+   );
+// router.post('/api/auth/google', userController.google_sign);
 
 
 
