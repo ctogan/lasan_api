@@ -40,6 +40,13 @@ router.get('/api/author/recommedation', homeController.author_recommendation);
 
 router.post("/api/auth/google", async (req, res) => {
 
+	// try {
+	// 	const response = await client.getToken(req.body.code);
+	// 	console.log('response', response);
+	//   } catch (error) {
+	// 	console.log('error', error);
+	//   }
+
 	async function verify() {
 		const ticket = await client.verifyIdToken({
 			idToken: req.body.code,
