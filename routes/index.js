@@ -65,14 +65,14 @@ router.post("/api/auth/google", async (req, res) => {
 			maxAge: 24 * 60 * 60 * 1000
 		});
 		
-
-		res.status(200).send({
+		return res.status(200).send({
 			auth: true,
 			email: email,
 			accessToken: token,
 			message: "Success",
 			errors: null
 		}); 
+
 	  }
 	  verify().catch(console.error);
 	  } catch (error) {
