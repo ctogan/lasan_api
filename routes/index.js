@@ -11,6 +11,10 @@ const validateToken = require('../middleware/verifyJwtToken');
 const userTopicController = require('../controllers').usertopic;
 const authController = require('../controllers').auth;
 const {OAuth2Client} = require('google-auth-library');
+const User = require('../models').User;
+const uuid = require('uuid');
+const bcrypt = require('bcryptjs');
+const slugify = require('slugify');
 const client = new OAuth2Client('466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com' , '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' , 'http://127.0.0.1:3000/login');
 
 const passport = require("passport");
@@ -19,7 +23,6 @@ const db = require('../models');
 require("./passport")(passport);
 const jwt = require('jsonwebtoken');
 const config_roles = require('../config/configRoles.js');
-
 
 
 /* home*/
@@ -52,26 +55,73 @@ router.post("/api/auth/google", async (req, res) => {
 			idToken: response.tokens.id_token,
 			audience: '466171963780-if78nhnamd4if7uadurdiijp7v2spcoh.apps.googleusercontent.com',
 		});
-		const { username, email, avatar, sub } = ticket.getPayload();
+		const { name,family_name,given_name, email, picture, sub } = ticket.getPayload();
+		// console.log(ticket);
 
-		var token = 'Bearer ' + jwt.sign({
-			id: sub
-		}, config_roles.secret, {
-			expiresIn: 86400 //24h expired
-		});	
+	
+		User.findOne({
+            where: {
+                email: email
+            }
+        }).then(user => {
+			if (!user) {
+				User
+				.create({
+					uuid: uuid.v4(),
+					first_name: name,
+					last_name: family_name,
+					avatar: picture,
+					username: given_name,
+					email: email,
+					password: '',
+					phone: '',
+					is_verified:false,
+					slug: given_name,
+					gender: 'male',
+					occupation:''
+				})
+				.then((User) => {
 
-		res.cookie('ls_token', token,{
-			httpOnly: true,
-			maxAge: 24 * 60 * 60 * 1000
+
+					console.log(User.id);
+				// 	var token = 'Bearer ' + jwt.sign({
+				// 		id: user.id
+				// 	}, config_roles.secret, {
+				// 		expiresIn: 86400 //24h expired
+				// 	});	
+
+				// 	User.update({token: token},{
+				// 		where:{
+				// 			id: User.id
+				// 	}});
+				//    res.cookie('ls_token', token,{
+				// 		httpOnly: true,
+				// 		maxAge: 24 * 60 * 60 * 1000
+				// 	});
+				// 	console.log(token);	
+				// 	return res.status(200).json({
+				// 		auth: true,
+				// 		email: email,
+				// 		accessToken: token,
+				// 		message: "Success",
+				// 		errors: null
+				// 	});
+			
+				})
+				.catch((error) => res.status(400).send(error));
+			}
 		});
+
+
 		
-		return res.status(200).send({
-			auth: true,
-			email: email,
-			accessToken: token,
-			message: "Success",
-			errors: null
-		}); 
+		// return res.status(200).send({
+		// 	auth: true,
+		// 	email: email,
+		// 	accessToken: token,
+		// 	message: "Success",
+		// 	errors: null
+		// }); 
+
 
 	  }
 	  verify().catch(console.error);
