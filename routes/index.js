@@ -65,7 +65,7 @@ router.post("/api/auth/google", async (req, res) => {
             }
         }).then(user => {
 			if (!user) {
-				User
+				const addAuthUser = User
 				.create({
 					uuid: uuid.v4(),
 					first_name: name,
@@ -80,39 +80,39 @@ router.post("/api/auth/google", async (req, res) => {
 					gender: 'male',
 					occupation:''
 				})
+				// .then((Article) => res.status(201).send(User))
 				.then((User) => {
+					// console.log('testing');	
+					// console.log(User.dataValues.id);	
+					var token = 'Bearer ' + jwt.sign({
+						id: User.dataValues.id
+					}, config_roles.secret, {
+						expiresIn: 86400 //24h expired
+					});	
 
-
-					console.log(User.id);
-				// 	var token = 'Bearer ' + jwt.sign({
-				// 		id: user.id
-				// 	}, config_roles.secret, {
-				// 		expiresIn: 86400 //24h expired
-				// 	});	
-
-				// 	User.update({token: token},{
-				// 		where:{
-				// 			id: User.id
-				// 	}});
-				//    res.cookie('ls_token', token,{
-				// 		httpOnly: true,
-				// 		maxAge: 24 * 60 * 60 * 1000
-				// 	});
-				// 	console.log(token);	
-				// 	return res.status(200).json({
-				// 		auth: true,
-				// 		email: email,
-				// 		accessToken: token,
-				// 		message: "Success",
-				// 		errors: null
-				// 	});
+					User.update({token: token},{
+						where:{
+							id: User.dataValues.id
+					}});
+				   res.cookie('ls_token', token,{
+						httpOnly: true,
+						maxAge: 24 * 60 * 60 * 1000
+					});
+					console.log(token);	
+					return res.status(200).json({
+						auth: true,
+						email: email,
+						accessToken: token,
+						message: "Success",
+						errors: null
+					});
 			
 				})
 				.catch((error) => res.status(400).send(error));
 			}
 		});
 
-
+		// console.log(addAuthUser.id)
 		
 		// return res.status(200).send({
 		// 	auth: true,
