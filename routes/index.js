@@ -80,10 +80,7 @@ router.post("/api/auth/google", async (req, res) => {
 					gender: 'male',
 					occupation:''
 				})
-				// .then((Article) => res.status(201).send(User))
 				.then((User) => {
-					// console.log('testing');	
-					// console.log(User.dataValues.id);	
 					var token = 'Bearer ' + jwt.sign({
 						id: User.dataValues.id
 					}, config_roles.secret, {
@@ -109,6 +106,29 @@ router.post("/api/auth/google", async (req, res) => {
 			
 				})
 				.catch((error) => res.status(400).send(error));
+			}else{
+				var token = 'Bearer ' + jwt.sign({
+					id: user.id
+				}, config_roles.secret, {
+					expiresIn: 86400 //24h expired
+				});	
+
+				User.update({token: token},{
+					where:{
+						id: user.id
+				}});
+			   res.cookie('ls_token', token,{
+					httpOnly: true,
+					maxAge: 24 * 60 * 60 * 1000
+				});
+				console.log(token);	
+				return res.status(200).json({
+					auth: true,
+					email: email,
+					accessToken: token,
+					message: "Success",
+					errors: null
+				});
 			}
 		});
 
@@ -137,8 +157,9 @@ router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],auth
 router.post('/api/auth/signin', authController.signin);
 router.delete('/api/auth/signout',[validateToken.verifyToken],authController.signout);
 
-router.get('/api/user/profile/:uuid',userController.detail);
-router.get('/api/user/my-profile',[validateToken.verifyToken],userController.profile);
+//router.get('/api/user/profile/:uuid',userController.detail);
+router.post('/api/user/profile',[validateToken.verifyToken],userController.profile);
+router.get('/api/user/profile',[validateToken.verifyToken],userController.profile);
 router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
 router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
 

@@ -5,7 +5,8 @@ module.exports = {
 
 	verifyToken(req,res,next){
 
-		let tokenHeader = req.headers['x-access-token'];
+		let tokenHeader = req.headers['authorization'];
+		console.log(req.headers['authorization'])
 		if(!tokenHeader){
 			return res.status(500).send({
 				code    : 200,
