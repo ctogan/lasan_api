@@ -123,13 +123,14 @@ module.exports = {
     like(req, res) {
       return UserLike
       .create({
-          user_id           : req.userId,
-          article_id        : req.body.article_id,
+          user_id     : req.userId,
+          slug        : req.body.slug,
 
       })
       .then((data) => res.status(201).send(data))
       .catch((error) => res.status(400).send(error));
     },
+
     archive(req,res){
       return UserArchive
       .create({
@@ -172,64 +173,64 @@ module.exports = {
       .catch((error)=>{res.status(400).send(error);});
     },
 
-      recommended(req, res) {
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
-      selected(req, res) {
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
+    recommended(req, res) {
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
+    selected(req, res) {
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
 
-      newest(req, res){
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
-      
-      popular(req, res){
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
+    newest(req, res){
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
+    
+    popular(req, res){
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
 
     
 }

@@ -81,47 +81,31 @@ router.post("/api/auth/google", async (req, res) => {
 					occupation:''
 				})
 				.then((User) => {
-					var token = 'Bearer ' + jwt.sign({
-						id: User.dataValues.id
-					}, config_roles.secret, {
-						expiresIn: 86400 //24h expired
-					});	
-
-					User.update({token: token},{
-						where:{
-							id: User.dataValues.id
-					}});
-				   res.cookie('ls_token', token,{
-						httpOnly: true,
-						maxAge: 24 * 60 * 60 * 1000
-					});
-					console.log(token);	
-					return res.status(200).json({
-						auth: true,
-						email: email,
-						accessToken: token,
-						message: "Success",
-						errors: null
-					});
+				
+					const user_id = User.dataValues.id;
 			
 				})
 				.catch((error) => res.status(400).send(error));
 			}else{
+				var user_id = user.id;	
+			}
+			
 				var token = 'Bearer ' + jwt.sign({
-					id: user.id
+					id: user_id
 				}, config_roles.secret, {
 					expiresIn: 86400 //24h expired
 				});	
 
+				console.log(token);
 				User.update({token: token},{
 					where:{
-						id: user.id
+						id: user_id
 				}});
-			   res.cookie('ls_token', token,{
+			res.cookie('ls_token', token,{
 					httpOnly: true,
 					maxAge: 24 * 60 * 60 * 1000
 				});
-				console.log(token);	
+			
 				return res.status(200).json({
 					auth: true,
 					email: email,
@@ -129,18 +113,9 @@ router.post("/api/auth/google", async (req, res) => {
 					message: "Success",
 					errors: null
 				});
-			}
-		});
 
-		// console.log(addAuthUser.id)
-		
-		// return res.status(200).send({
-		// 	auth: true,
-		// 	email: email,
-		// 	accessToken: token,
-		// 	message: "Success",
-		// 	errors: null
-		// }); 
+
+		});
 
 
 	  }
@@ -149,7 +124,7 @@ router.post("/api/auth/google", async (req, res) => {
 		console.log('error', error);
 	  }
 })
-// router.post('/api/auth/google',authController.sign_google);
+router.post('/api/auth/google',authController.sign_google);
 
 
 //User
@@ -178,6 +153,7 @@ router.post('/api/article/add',[validateToken.verifyToken], articleController.ad
 router.get('/api/articles/trendings', articleController.trending);
 // router.get('/api/articles/short/trendings', articleController.trending);
 router.get('/api/article/get/selected', articleController.selected);
+router.post('/api/article/get/related', articleController.trending);
 router.get('/api/article/get/newest', articleController.newest);
 router.get('/api/article/get/popular', articleController.popular);
 router.post('/api/article/add/like',[
