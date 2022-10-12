@@ -196,10 +196,7 @@ module.exports = {
       // .catch((error) => res.status(400).send(error));
     },
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 5c91ec9d2ed8bde215e325dc3e7fbb722b3ed4c5
     archive(req,res){
       return UserArchive
       .create({

@@ -139,9 +139,9 @@ router.post('/api/user/follow',[validateToken.verifyToken],userController.follow
 router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
 
 router.get(
-	"/api/auth/google",
+"/api/auth/google",
 	passport.authenticate("google", { scope: ["email", "profile"] })
-   );
+);
 // router.post('/api/auth/google', userController.google_sign);
 
 
@@ -167,7 +167,7 @@ router.post('/api/article/add/archive',[
 	validateToken.verifyToken
 ],articleController.archive);
 
-// router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
+ //router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
 
 
 //Topic
