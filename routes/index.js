@@ -80,10 +80,9 @@ router.post("/api/auth/google", async (req, res) => {
 					gender: 'male',
 					occupation:''
 				})
-				// .then((Article) => res.status(201).send(User))
 				.then((User) => {
 				
-					var user_id = User.dataValues.id;
+					const user_id = User.dataValues.id;
 			
 				})
 				.catch((error) => res.status(400).send(error));
@@ -133,8 +132,9 @@ router.post('/api/auth/signup',[validateUser.checkDuplicateUserNameOrEmail],auth
 router.post('/api/auth/signin', authController.signin);
 router.delete('/api/auth/signout',[validateToken.verifyToken],authController.signout);
 
-router.get('/api/user/profile/:uuid',userController.detail);
-router.get('/api/user/my-profile',[validateToken.verifyToken],userController.profile);
+//router.get('/api/user/profile/:uuid',userController.detail);
+router.post('/api/user/profile',[validateToken.verifyToken],userController.profile);
+router.get('/api/user/profile',[validateToken.verifyToken],userController.profile);
 router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
 router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
 
@@ -153,6 +153,7 @@ router.post('/api/article/add',[validateToken.verifyToken], articleController.ad
 router.get('/api/articles/trendings', articleController.trending);
 // router.get('/api/articles/short/trendings', articleController.trending);
 router.get('/api/article/get/selected', articleController.selected);
+router.post('/api/article/get/related', articleController.trending);
 router.get('/api/article/get/newest', articleController.newest);
 router.get('/api/article/get/popular', articleController.popular);
 router.post('/api/article/add/like',[

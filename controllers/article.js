@@ -121,6 +121,13 @@ module.exports = {
     },
 
     like(req, res) {
+<<<<<<< HEAD
+=======
+      return UserLike
+      .create({
+          user_id     : req.userId,
+          slug        : req.body.slug,
+>>>>>>> 5c91ec9d2ed8bde215e325dc3e7fbb722b3ed4c5
 
        Article
         .findOne( {
@@ -196,7 +203,10 @@ module.exports = {
       // .catch((error) => res.status(400).send(error));
     },
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c91ec9d2ed8bde215e325dc3e7fbb722b3ed4c5
     archive(req,res){
       return UserArchive
       .create({
@@ -239,64 +249,64 @@ module.exports = {
       .catch((error)=>{res.status(400).send(error);});
     },
 
-      recommended(req, res) {
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
-      selected(req, res) {
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
+    recommended(req, res) {
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
+    selected(req, res) {
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
 
-      newest(req, res){
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
-      
-      popular(req, res){
-        return Article
-        .findAll({
-            include:[{
-                model: Topic,
-                as: 'topic'
-              }],
-            order:[
-                ['createdAt','DESC']
-            ]
-        })
-        .then((Article)=> res.status(200).send(Article))
-        .catch((error)=>{res.status(400).send(error);});
-      },
+    newest(req, res){
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
+    
+    popular(req, res){
+      return Article
+      .findAll({
+          include:[{
+              model: Topic,
+              as: 'topic'
+            }],
+          order:[
+              ['createdAt','DESC']
+          ]
+      })
+      .then((Article)=> res.status(200).send(Article))
+      .catch((error)=>{res.status(400).send(error);});
+    },
 
     
 }
