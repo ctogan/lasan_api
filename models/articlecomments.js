@@ -10,7 +10,30 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      ArticleComments.belongsTo(models.User,{
+        foreignKey:'user_id',
+        as:'author'
+      })
+
+      ArticleComments.hasMany(models.ArticleComments, 
+        { 
+            foreignKey  : 'parent_id', 
+            as          : 'child', 
+            
+        });
+
+        // ArticleComments.belongsToMany(ArticleComments, 
+        // { 
+        //     through     : models.ArticleComments,
+        //     foreignKey  : 'parent_id', 
+        //     as          : 'child', 
+        //     targetKey   : 'id'
+        // });
+  
+      // ArticleComments.belongsTo(models.ArticleComments,{
+      //   foreignKey:'parent_id',
+      //   targetKey: "id"
+      // })
     }
   }
   ArticleComments.init({
@@ -20,10 +43,15 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     article_id: DataTypes.INTEGER,
+    parent_id:DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     comment: DataTypes.TEXT,
     status: DataTypes.STRING,
     media: DataTypes.STRING,
+    is_like: DataTypes.STRING,
+    total_comment_like: DataTypes.STRING,
+    total_comment_reply: DataTypes.STRING,
+
   }, {
     sequelize,
     modelName: 'ArticleComments',

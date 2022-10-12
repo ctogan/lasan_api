@@ -11,6 +11,9 @@ module.exports = {
       article_id: {
         type: Sequelize.INTEGER
       },
+      parent_id: {
+        type: Sequelize.INTEGER
+      },
       user_id: {
         type: Sequelize.INTEGER
       },
@@ -21,6 +24,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       media: {
+        type: Sequelize.STRING
+      },
+      is_like: {
+        type: Sequelize.STRING
+      },
+      total_comment_like: {
+        type: Sequelize.STRING
+      },
+      total_comment_reply: {
         type: Sequelize.STRING
       },
       created_at: {

@@ -159,13 +159,11 @@ router.get('/api/article/get/popular', articleController.popular);
 router.post('/api/article/add/like',[
 	validateToken.verifyToken
 ],articleController.like);
-
-
-
-
 router.post('/api/article/add/archive',[
 	validateToken.verifyToken
 ],articleController.archive);
+
+router.get('/api/article/get/comment', articleController.get_comment);
 
 // router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
 

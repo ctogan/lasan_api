@@ -4,6 +4,7 @@ const Topic = require('../models').Topic;
 const User = require('../models').User;
 const UserLike = require('../models').UserLike
 const UserArchive = require('../models').UserArchive
+const ArticleComments = require('../models').ArticleComments
 
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
@@ -246,7 +247,7 @@ module.exports = {
               as: 'topic'
             }],
           order:[
-              ['createdAt','DESC']
+              ['created_at','DESC']
           ]
       })
       .then((Article)=> res.status(200).send(Article))
@@ -260,7 +261,7 @@ module.exports = {
               as: 'topic'
             }],
           order:[
-              ['createdAt','DESC']
+              ['created_at','DESC']
           ]
       })
       .then((Article)=> res.status(200).send(Article))
@@ -275,7 +276,7 @@ module.exports = {
               as: 'topic'
             }],
           order:[
-              ['createdAt','DESC']
+              ['created_at','DESC']
           ]
       })
       .then((Article)=> res.status(200).send(Article))
@@ -290,12 +291,60 @@ module.exports = {
               as: 'topic'
             }],
           order:[
-              ['createdAt','DESC']
+              ['created_at','DESC']
           ]
       })
       .then((Article)=> res.status(200).send(Article))
       .catch((error)=>{res.status(400).send(error);});
     },
 
-    
+    get_comment(req,res){
+
+      Article
+      .findOne({
+          where :{
+            slug:req.body.slug,
+          }
+      }).then((article)=>{
+          ArticleComments
+          .findAll({
+              where: {
+                // slug: req.body.slug,
+                status: 'active',
+              },
+              include:[
+                  {
+                    model: User,
+                    as: 'author',
+                    attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+                  },
+                  {
+                    model: ArticleComments,
+                    // required: true,
+                    as: 'child',
+                    attributes: [['id','comment_reply_id'],'comment','is_like','total_comment_like','total_comment_reply','created_at','updated_at'],
+                    
+                  },
+                  
+              ],
+              // raw: true,
+              attributes: [['id','comment_id'],'comment','media','is_like','total_comment_like','total_comment_reply','created_at','updated_at'],
+              order:[
+                  ['created_at','DESC']
+              ]
+          })
+          .then((comments) => {
+              var result = {
+                code    : 200,
+                status  : 'success',
+                message : 'success',
+                data    : comments
+              }
+            
+            return res.status(200).send(result);
+          
+          })
+          .catch((error)=>{res.status(400).send(error);});
+      })
+    }    
 }
