@@ -121,15 +121,82 @@ module.exports = {
     },
 
     like(req, res) {
-      return UserLike
-      .create({
-          user_id           : req.userId,
-          article_id        : req.body.article_id,
 
-      })
-      .then((data) => res.status(201).send(data))
-      .catch((error) => res.status(400).send(error));
+       Article
+        .findOne( {
+          where: {
+            slug: req.body.slug,
+           },
+        })
+        .then((data) => {
+         
+          if (!data) {
+            return res.status(200).send({
+              code    : 200,
+              status  : 'error',
+              message : 'Article Not Found',
+              data    : []
+            });
+          }
+          UserLike
+          .findOne({
+            where:{
+              user_id           : req.userId,
+              article_id :data.id,
+            }
+          }).then((userlike) =>{
+              if(!userlike){
+
+                UserLike
+                .create({
+                    user_id           : req.userId,
+                    article_id        : data.id,
+                });
+
+                var result = {
+                  code    : 200,
+                  status  : 'success',
+                  message : 'Success follow',
+                  data    : userlike
+                }            
+                
+              }else{
+                var result = {
+                  code    : 200,
+                  status  : 'success',
+                  message : 'have follow',
+                  data    : []
+                }
+              }
+              return res.status(200).send(result);
+          }).catch((error) => {
+            res.status(400).send({
+              status: false,
+              message: 'Bad Request',
+              errors: error
+            });
+          })
+          
+        })
+        .catch((error) => {
+          res.status(400).send({
+            status: false,
+            message: 'Bad Request',
+            errors: error
+          });
+        });
+        
+      // return UserLike
+      // .create({
+      //     user_id           : req.userId,
+      //     article_id        : req.body.article_id,
+
+      // })
+      // .then((data) => res.status(201).send(data))
+      // .catch((error) => res.status(400).send(error));
     },
+
+
     archive(req,res){
       return UserArchive
       .create({
