@@ -136,7 +136,7 @@ router.delete('/api/auth/signout',[validateToken.verifyToken],authController.sig
 router.post('/api/user/profile',[validateToken.verifyToken],userController.profile);
 router.get('/api/user/profile',[validateToken.verifyToken],userController.profile);
 router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
-router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
+// router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
 
 router.get(
 	"/api/auth/google",

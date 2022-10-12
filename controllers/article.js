@@ -142,10 +142,10 @@ module.exports = {
           .findOne({
             where:{
               user_id           : req.userId,
-              article_id :data.id,
+              article_id        :data.id,
             }
-          }).then((userlike) =>{
-              if(!userlike){
+          }).then((articlelike) =>{
+              if(!articlelike){
 
                 UserLike
                 .create({
@@ -157,14 +157,14 @@ module.exports = {
                   code    : 200,
                   status  : 'success',
                   message : 'Success follow',
-                  data    : userlike
+                  data    : articlelike
                 }            
                 
               }else{
                 var result = {
                   code    : 200,
                   status  : 'success',
-                  message : 'have follow',
+                  message : 'have like',
                   data    : []
                 }
               }
@@ -196,10 +196,6 @@ module.exports = {
       // .catch((error) => res.status(400).send(error));
     },
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5c91ec9d2ed8bde215e325dc3e7fbb722b3ed4c5
     archive(req,res){
       return UserArchive
       .create({
