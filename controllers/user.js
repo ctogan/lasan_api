@@ -102,18 +102,61 @@ module.exports = {
 	},
 
 	follow(req,res){
-		return UserFollow
-		.create({
-			user_id           	: req.userId,
-			author_id        	: req.body.author_id,
-		})
-		.then((data) => res.status(201).send({
-			code    : 200,
-			status  : 'success',
-			message : 'user follow success',
-			data    : []
-		}
-		)).catch((error) => res.status(400).send(error));
+
+		User
+		.findOne({
+			where:{
+				uuid: req.body.uuid,
+			},
+
+		}).then((user) => {
+
+			if (!user) {
+				return res.status(200).send({
+					code    : 200,
+					status  : 'error',
+					message : 'User Not Found',
+					data    : []
+				});
+			}
+
+			if(req.body.action == 'false'){
+				UserFollow
+				.create({
+					user_id           	: req.userId,
+					author_id        	: user.id,
+				})
+				var result = {
+					code    : 200,
+					status  : 'success',
+					message : 'Success follow',
+					data    : []
+				}   
+			}else{
+				UserFollow.destroy({
+					where: {
+						user_id  	: req.userId,
+						author_id   : user.id,
+					}
+				})
+				var result = {
+					code    : 200,
+					status  : 'success',
+					message : 'Success unfollow',
+					data    : []
+				}   
+			}
+			
+			return res.status(200).send(result);         
+			
+		}).catch((error) => {
+			res.status(500).send({
+				status: false,
+				message: 'Bad Request',
+				errors: error
+			});
+		});
+
 	},
 	unfollow(req,res){
 

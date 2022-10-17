@@ -8,8 +8,23 @@ const {
 
 module.exports = {
     author_recommendation(req,res){
-        const lstoken = req.cookies.lstoken;
-       
+        const lstoken = req.cookies['ls_token'];
+        
+        // return User
+        //     .findAll({
+        //       attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+        //       order: Sequelize.literal('random()'),
+        //       limit : 3
+        //     })
+        //     .then((User)=> res.status(200).send({
+        //       'code'    : 200,
+        //       "status"  : "true",
+        //       "message" : "success",
+        //       'data'    : User,
+        //     }))
+        //     .catch((error)=>{res.status(400).send(error);});
+    
+    
         if(!lstoken){
             return User
             .findAll({

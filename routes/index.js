@@ -136,7 +136,7 @@ router.delete('/api/auth/signout',[validateToken.verifyToken],authController.sig
 router.post('/api/user/profile',[validateToken.verifyToken],userController.profile);
 router.get('/api/user/profile',[validateToken.verifyToken],userController.profile);
 router.post('/api/user/follow',[validateToken.verifyToken],userController.follow);
-router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
+// router.post('/api/user/unfollow',[validateToken.verifyToken],userController.unfollow);
 
 router.get(
 "/api/auth/google",
@@ -159,15 +159,13 @@ router.get('/api/article/get/popular', articleController.popular);
 router.post('/api/article/add/like',[
 	validateToken.verifyToken
 ],articleController.like);
-
-
-
-
 router.post('/api/article/add/archive',[
 	validateToken.verifyToken
 ],articleController.archive);
 
- //router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
+router.post('/api/article/get/comment', articleController.get_comment);
+
+// router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
 
 
 //Topic
