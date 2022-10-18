@@ -310,13 +310,13 @@ module.exports = {
           ArticleComments
           .findAll({
               where: {
-                // slug: req.body.slug,
+                article_id: article.id,
                 status: 'active',
               },
               include:[
                   {
                     model: User,
-                    as: 'author',
+                    as: 'user',
                     attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
                   },
                   {
@@ -384,7 +384,7 @@ module.exports = {
                  ArticleComments
                   .create({
                       article_id            : data.id,
-                      parent_id             : data.id,
+                      parent_id             : '',
                       user_id               : req.userId,
                       comment               : req.body.comment,
                       status                : 'active',
@@ -408,9 +408,7 @@ module.exports = {
                         }
                       }  
                       return res.status(200).send(result);
-                  });
-
-                  
+                  });                  
             });
                         
           })
@@ -422,5 +420,38 @@ module.exports = {
             });
           });
         
+    },
+    reply_comment(req,res){   
+
+      ArticleComments
+      .findOne( {
+        include:[
+            {
+              model: User,
+              as: 'user',
+              attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+            },
+            {
+              model: ArticleComments,
+              as: 'article',
+              // attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+            },
+           
+        ],
+        where: {
+          id: req.body.comment_id,
+        },
+      })
+      .then((data) => {
+        
+                    
+      })
+      .catch((error) => {
+        res.status(400).send({
+          status: false,
+          message: 'Bad Request',
+          errors: error
+        });
+      });
     }
 }
