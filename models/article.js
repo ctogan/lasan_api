@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       Article.belongsTo(models.User,{
         foreignKey:'user_id',
         as:'author'
+      }),
+      
+      Article.belongsTo(models.User,{
+        foreignKey:'user_id',
+        as:'user'
       })
     }
   }

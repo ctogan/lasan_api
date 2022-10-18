@@ -315,7 +315,7 @@ module.exports = {
               include:[
                   {
                     model: User,
-                    as: 'author',
+                    as: 'user',
                     attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
                   },
                   {
@@ -421,5 +421,79 @@ module.exports = {
             });
           });
         
+    },
+    reply_comment(req,res){   
+
+      Article
+      .findOne( {
+        where: {
+          slug: req.body.slug,
+        },
+      })
+      .then((data) => {
+        if (!data) {
+          return res.status(200).send({
+            code    : 200,
+            status  : 'error',
+            message : 'Article Not Found',
+            data    : []
+          });
+        }
+        User
+        .findOne( {
+          attributes: [['username','name'],['avatar','profile_picture']],
+          where: {
+            id: req.userId,
+          },
+        }).then((user) => {
+
+            if(!user){
+              return res.status(200).send({
+                code    : 200,
+                status  : 'error',
+                message : 'User Not Found',
+                data    : []
+              });
+            }
+             ArticleComments
+              .create({
+                  article_id            : data.id,
+                  parent_id             : data.id,
+                  user_id               : req.userId,
+                  comment               : req.body.comment,
+                  status                : 'active',
+                  media                 : '',
+                  total_comment_like    : 0,
+                  total_comment_reply   : 0,
+              }) .then((comments) => {
+                  var result = {
+                    code    : 200,
+                    status  : 'success',
+                    message : 'Success',
+                    data    : {
+                      user,
+                      comment_id          : comments.id, 
+                      created_at          : comments.created_at,
+                      comment             : comments.comment,
+                      is_like             : false,
+                      total_comment_like  : comments.total_comment_like,
+                      total_comment_reply : comments.total_comment_reply,
+                      comment_replies     :[]
+                    }
+                  }  
+                  return res.status(200).send(result);
+              });
+
+              
+        });
+                    
+      })
+      .catch((error) => {
+        res.status(400).send({
+          status: false,
+          message: 'Bad Request',
+          errors: error
+        });
+      });
     }
 }
