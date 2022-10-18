@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'article_comment_like',
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   });
   return article_comment_like;
 };

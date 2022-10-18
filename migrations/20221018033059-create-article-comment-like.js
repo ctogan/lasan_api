@@ -17,12 +17,10 @@ module.exports = {
       is_like: {
         type: Sequelize.BOOLEAN
       },
-      createdAt: {
-        allowNull: false,
+      created_at: {
         type: Sequelize.DATE
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
         type: Sequelize.DATE
       }
     });

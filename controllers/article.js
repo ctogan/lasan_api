@@ -307,29 +307,33 @@ module.exports = {
             slug:req.body.slug,
           }
       }).then((article)=>{
-          ArticleComments
+          
+        ArticleComments
           .findAll({
               where: {
                 article_id: article.id,
+                parent_id : 0,
                 status: 'active',
               },
               include:[
                   {
                     model: User,
                     as: 'user',
-                    attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+                    attributes: [['username','name'],['avatar','profile_picture']],
                   },
                   {
                     model: ArticleComments,
-                    // required: true,
-                    as: 'child',
-                    attributes: [['id','comment_reply_id'],'comment','total_comment_like','total_comment_reply','created_at','updated_at'],
-                    
+                    as: 'comment_replies',
+                    include: [{
+                      model: User,
+                      as:'user',
+                      attributes: [['username','name'],['avatar','profile_picture']],
+                    }],
+                    attributes: [['id','comment_reply_id'],'total_comment_like','comment','created_at'],
                   },
-                  
+              
               ],
-              // raw: true,
-              attributes: [['id','comment_id'],'comment','media','total_comment_like','total_comment_reply','created_at','updated_at'],
+              attributes: [['id','comment_id'],'comment','media','total_comment_like','total_comment_reply','created_at'],
               order:[
                   ['created_at','DESC']
               ]
@@ -346,6 +350,8 @@ module.exports = {
           
           })
           .catch((error)=>{res.status(400).send(error);});
+
+          
       })
     },
     add_comment(req,res){   
