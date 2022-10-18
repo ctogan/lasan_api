@@ -24,11 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       Article.belongsTo(models.User,{
         foreignKey:'user_id',
         as:'user'
-      }),
-
-      Article.hasMany(models.ArticleComment,{
-        foreignKey:'article_id',
-        as:'article'
       })
     }
   }
