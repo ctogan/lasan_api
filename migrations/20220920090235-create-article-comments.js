@@ -26,9 +26,6 @@ module.exports = {
       media: {
         type: Sequelize.STRING
       },
-      is_like: {
-        type: Sequelize.STRING
-      },
       total_comment_like: {
         type: Sequelize.STRING
       },
