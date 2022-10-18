@@ -5,6 +5,7 @@ const User = require('../models').User;
 const UserLike = require('../models').UserLike
 const UserArchive = require('../models').UserArchive
 const ArticleComments = require('../models').ArticleComments
+const ArticleCommentLike = require('../models').ArticleCommentsLike
 
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
@@ -186,15 +187,7 @@ module.exports = {
             errors: error
           });
         });
-        
-      // return UserLike
-      // .create({
-      //     user_id           : req.userId,
-      //     article_id        : req.body.article_id,
-
-      // })
-      // .then((data) => res.status(201).send(data))
-      // .catch((error) => res.status(400).send(error));
+      
     },
 
     archive(req,res){
@@ -323,11 +316,13 @@ module.exports = {
                   {
                     model: ArticleComments,
                     as: 'comment_replies',
-                    include: [{
-                      model: User,
-                      as:'user',
-                      attributes: [['username','name'],['avatar','profile_picture']],
-                    }],
+                    include: [
+                      {
+                        model: User,
+                        as:'user',
+                        attributes: [['username','name'],['avatar','profile_picture']],
+                      },
+                  ],
                     attributes: [['id','comment_reply_id'],'total_comment_like','comment','created_at'],
                   },
               
@@ -350,11 +345,11 @@ module.exports = {
           })
           .catch((error)=>{res.status(400).send(error);});
 
-          
+
       })
     },
     add_comment(req,res){   
-        // console.log('testing');
+      
           Article
           .findOne( {
             where: {
@@ -495,6 +490,7 @@ module.exports = {
                           comment             : comments.comment,
                           is_like             : false,
                           total_comment_like  : comments.total_comment_like,
+                          created_at          : comments.created_at,
                         }
                       }
                     }  

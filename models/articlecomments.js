@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
           
       });
 
+      // ArticleComments.belongsTo(models.ArticleCommentLike, 
+      // { 
+      //     foreignKey  : 'id', 
+      //     as          : 'comment_like', 
+          
+      // });
+  
+
         // ArticleComments.belongsToMany(ArticleComments, 
         // { 
         //     foreignKey  : 'parent_id', 
