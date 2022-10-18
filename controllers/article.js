@@ -346,5 +346,50 @@ module.exports = {
           })
           .catch((error)=>{res.status(400).send(error);});
       })
-    }    
+    },
+    add_comment(req,res){   
+          Article
+          .findOne( {
+            where: {
+              slug: req.body.slug,
+            },
+          })
+          .then((data) => {
+            if (!data) {
+              return res.status(200).send({
+                code    : 200,
+                status  : 'error',
+                message : 'Article Not Found',
+                data    : []
+              });
+            }
+            ArticleComments
+                .create({
+                    article_id            : data.id,
+                    parent_id             : data.id,
+                    user_id               : req.userId,
+                    comment               : req.body.comment,
+                    status                : 'active',
+                    media                 : '',
+                    is_like               : 0,
+                    total_comment_like    : 0,
+                    total_comment_reply   : 0,
+                });
+
+                var result = {
+                  code    : 200,
+                  status  : 'success',
+                  message : 'Success',
+                  data    : []
+                }  
+                return res.status(200).send(result);          
+          })
+          .catch((error) => {
+            res.status(400).send({
+              status: false,
+              message: 'Bad Request',
+              errors: error
+            });
+          });
+    }
 }
