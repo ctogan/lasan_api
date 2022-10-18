@@ -463,8 +463,8 @@ module.exports = {
                 
                 ArticleComments
                 .create({
-                    article_id            : data.id,
-                    parent_id             : data.article_id,
+                    article_id            : data.article_id,
+                    parent_id             : data.id,
                     user_id               : req.userId,
                     comment               : req.body.comment,
                     status                : 'active',
