@@ -429,12 +429,12 @@ module.exports = {
               model: User,
               as: 'user',
               attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
-            },
+            },      
             {
               model: Article,
               as: 'article',
-              attributes: [['id','article_id']],
-            },
+              // attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+            },      
            
         ],
         where: {
@@ -443,12 +443,67 @@ module.exports = {
       })
       .then((data) => {
 
-         return res.status(200).send({
-            code    : 200,
-            status  : 'success',
-            message : 'Success',
-            data    : data.article_id
-          });
+        User
+            .findOne( {
+              attributes: [['username','name'],['avatar','profile_picture']],
+              where: {
+                id: req.userId,
+              },
+            }).then((user) => {
+
+                if(!user){
+                  return res.status(200).send({
+                    code    : 200,
+                    status  : 'error',
+                    message : 'User Not Found',
+                    data    : []
+                  });
+                }
+                
+                ArticleComments
+                .create({
+                    article_id            : data.id,
+                    parent_id             : data.article_id,
+                    user_id               : req.userId,
+                    comment               : req.body.comment,
+                    status                : 'active',
+                    media                 : '',
+                    total_comment_like    : 0,
+                    total_comment_reply   : 0,
+                }) .then((comments) => {
+                    var result = {
+                      code    : 200,
+                      status  : 'success',
+                      message : 'Success',
+                      data    : {
+                        user,
+                        comment_id          : comments.id, 
+                        created_at          : data.created_at,
+                        comment             : data.comment,
+                        is_like             : false,
+                        total_comment_like  : data.total_comment_like,
+                        total_comment_reply : data.total_comment_reply,
+                        comment_replies     :{
+                          user,
+                          comment             : comments.comment,
+                          is_like             : false,
+                          total_comment_like  : comments.total_comment_like,
+                        }
+                      }
+                    }  
+                    return res.status(200).send(result);
+                });                  
+            
+                 
+              });                                          
+          })
+          .catch((error) => {
+            res.status(400).send({
+              status: false,
+              message: 'Bad Request',
+              errors: error
+            });
+          
                     
       })
       .catch((error) => {
