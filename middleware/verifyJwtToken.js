@@ -51,8 +51,7 @@ module.exports = {
 						errors: err
 					});
 				}
-				req.userId = decoded.id;
-				
+				req.userId = decoded.id;				
 				next();
 			});
 	

@@ -348,6 +348,7 @@ module.exports = {
       })
     },
     add_comment(req,res){   
+        // console.log('testing');
           Article
           .findOne( {
             where: {
@@ -363,25 +364,54 @@ module.exports = {
                 data    : []
               });
             }
-            ArticleComments
-                .create({
-                    article_id            : data.id,
-                    parent_id             : data.id,
-                    user_id               : req.userId,
-                    comment               : req.body.comment,
-                    status                : 'active',
-                    media                 : '',
-                    total_comment_like    : 0,
-                    total_comment_reply   : 0,
-                });
+            User
+            .findOne( {
+              attributes: [['username','name'],['avatar','profile_picture']],
+              where: {
+                id: req.userId,
+              },
+            }).then((user) => {
 
-                var result = {
-                  code    : 200,
-                  status  : 'success',
-                  message : 'Success',
-                  data    : []
-                }  
-                return res.status(200).send(result);          
+                if(!user){
+                  return res.status(200).send({
+                    code    : 200,
+                    status  : 'error',
+                    message : 'User Not Found',
+                    data    : []
+                  });
+                }
+                 ArticleComments
+                  .create({
+                      article_id            : data.id,
+                      parent_id             : data.id,
+                      user_id               : req.userId,
+                      comment               : req.body.comment,
+                      status                : 'active',
+                      media                 : '',
+                      total_comment_like    : 0,
+                      total_comment_reply   : 0,
+                  }) .then((comments) => {
+                      var result = {
+                        code    : 200,
+                        status  : 'success',
+                        message : 'Success',
+                        data    : {
+                          user,
+                          comment_id          : comments.id, 
+                          created_at          : comments.created_at,
+                          comment             : comments.comment,
+                          is_like             : false,
+                          total_comment_like  : comments.total_comment_like,
+                          total_comment_reply : comments.total_comment_reply,
+                          comment_replies     :[]
+                        }
+                      }  
+                      return res.status(200).send(result);
+                  });
+
+                  
+            });
+                        
           })
           .catch((error) => {
             res.status(400).send({
@@ -390,5 +420,6 @@ module.exports = {
               errors: error
             });
           });
+        
     }
 }
