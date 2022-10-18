@@ -24,16 +24,14 @@ module.exports = (sequelize, DataTypes) => {
       ArticleComments.hasMany(models.ArticleComments, 
       { 
           foreignKey  : 'parent_id', 
-          as          : 'child', 
+          as          : 'comment_replies', 
           
       });
 
         // ArticleComments.belongsToMany(ArticleComments, 
         // { 
-        //     through     : models.ArticleComments,
         //     foreignKey  : 'parent_id', 
-        //     as          : 'child', 
-        //     targetKey   : 'id'
+        //     as          : 'article', 
         // });
   
       // ArticleComments.belongsTo(models.ArticleComments,{
