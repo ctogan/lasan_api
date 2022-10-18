@@ -75,10 +75,8 @@ module.exports = {
             User.update({token: token},{
                 where:{
                     id: user.id
-            }
-
-            });
-            res.cookie('ls_token', token,{
+            }});
+           res.cookie('ls_token', token,{
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000
             });
@@ -90,7 +88,7 @@ module.exports = {
                 accessToken: token,
                 message: "Success",
                 errors: null
-            });
+            }); 
 
         }).catch(err => {
             res.status(500).send({
@@ -103,7 +101,7 @@ module.exports = {
         });
     },
     sign_google(req,res){
-
+        
     },
     signout(req, res) {
 		const ls_token = req.cookies.ls_token;

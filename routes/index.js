@@ -164,8 +164,7 @@ router.post('/api/article/add/archive',[
 ],articleController.archive);
 
 router.post('/api/article/get/comment', articleController.get_comment);
-
- router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
+router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
 
 // router.post('/api/article/comment/store' , function(req , res){
 // 	console.log(req.body);
