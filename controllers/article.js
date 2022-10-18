@@ -322,13 +322,13 @@ module.exports = {
                     model: ArticleComments,
                     // required: true,
                     as: 'child',
-                    attributes: [['id','comment_reply_id'],'comment','is_like','total_comment_like','total_comment_reply','created_at','updated_at'],
+                    attributes: [['id','comment_reply_id'],'comment','total_comment_like','total_comment_reply','created_at','updated_at'],
                     
                   },
                   
               ],
               // raw: true,
-              attributes: [['id','comment_id'],'comment','media','is_like','total_comment_like','total_comment_reply','created_at','updated_at'],
+              attributes: [['id','comment_id'],'comment','media','total_comment_like','total_comment_reply','created_at','updated_at'],
               order:[
                   ['created_at','DESC']
               ]
@@ -371,7 +371,6 @@ module.exports = {
                     comment               : req.body.comment,
                     status                : 'active',
                     media                 : '',
-                    is_like               : 0,
                     total_comment_like    : 0,
                     total_comment_reply   : 0,
                 });

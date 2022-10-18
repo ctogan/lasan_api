@@ -48,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
     comment: DataTypes.TEXT,
     status: DataTypes.STRING,
     media: DataTypes.STRING,
-    is_like: DataTypes.STRING,
     total_comment_like: DataTypes.STRING,
     total_comment_reply: DataTypes.STRING,
 
