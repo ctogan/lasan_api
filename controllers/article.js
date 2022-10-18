@@ -431,9 +431,9 @@ module.exports = {
               attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
             },
             {
-              model: ArticleComments,
+              model: Article,
               as: 'article',
-              // attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+              attributes: [['id','article_id']],
             },
            
         ],
@@ -442,7 +442,13 @@ module.exports = {
         },
       })
       .then((data) => {
-        
+
+         return res.status(200).send({
+            code    : 200,
+            status  : 'success',
+            message : 'Success',
+            data    : data.article_id
+          });
                     
       })
       .catch((error) => {
