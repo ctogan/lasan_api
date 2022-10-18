@@ -384,7 +384,7 @@ module.exports = {
                  ArticleComments
                   .create({
                       article_id            : data.id,
-                      parent_id             : '',
+                      parent_id             : 0,
                       user_id               : req.userId,
                       comment               : req.body.comment,
                       status                : 'active',
@@ -478,7 +478,7 @@ module.exports = {
                       message : 'Success',
                       data    : {
                         user,
-                        comment_id          : comments.id, 
+                        comment_id          : data.id, 
                         created_at          : data.created_at,
                         comment             : data.comment,
                         is_like             : false,
@@ -486,6 +486,7 @@ module.exports = {
                         total_comment_reply : data.total_comment_reply,
                         comment_replies     :{
                           user,
+                          comment_reply_id    : comments.id,
                           comment             : comments.comment,
                           is_like             : false,
                           total_comment_like  : comments.total_comment_like,
