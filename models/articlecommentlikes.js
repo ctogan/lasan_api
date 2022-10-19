@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class ArticleCommentLike extends Model {
+  class ArticleCommentLikes extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // ArticleCommentLikes
+      // ArticleCommentLikes.belongsTo(models.ArticleComments,{
+      //   foreignKey:'article_comment_id',
+      //   as:'comment_like'
+      // });
+
     }
   }
-  ArticleCommentLike.init({
+  ArticleCommentLikes.init({
     article_comment_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     is_like: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'ArticleCommentLike',
+    modelName: 'ArticleCommentLikes',
+    tableName: 'article_comment_likes',
     createdAt: "created_at",
     updatedAt: "updated_at",
   });
-  return ArticleCommentLike;
+  return ArticleCommentLikes;
 };

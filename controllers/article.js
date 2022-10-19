@@ -5,7 +5,7 @@ const User = require('../models').User;
 const UserLike = require('../models').UserLike
 const UserArchive = require('../models').UserArchive
 const ArticleComments = require('../models').ArticleComments
-const ArticleCommentLike = require('../models').ArticleCommentsLike
+const ArticleCommentLike = require('../models').ArticleCommentLikes
 
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
@@ -293,8 +293,32 @@ module.exports = {
 
     get_comment(req,res){
 
+      // ArticleCommentLike
+      // .findOne({
+      //    where:{
+      //     article_comment_id: req.body.comment_id
+      //    }
+      // }).then((like)=>{
+
+      //         var result = {
+      //           code    : 200,
+      //           status  : 'success',
+      //           message : 'success',
+      //           data    :  like
+      //         }
+            
+      //       return res.status(200).send(result);
+      // }).catch((error) => {
+      //   res.status(400).send({
+      //     status: false,
+      //     message: 'Bad Request',
+      //     errors: error
+      //   });
+      // });
+
       Article
       .findOne({
+          
           where :{
             slug:req.body.slug,
           }
@@ -314,6 +338,11 @@ module.exports = {
                     attributes: [['username','name'],['avatar','profile_picture']],
                   },
                   {
+                    model: ArticleCommentLike,
+                    as: 'comment_like',
+                    attributes: ['is_like'],
+                  },
+                  {
                     model: ArticleComments,
                     as: 'comment_replies',
                     include: [
@@ -322,11 +351,18 @@ module.exports = {
                         as:'user',
                         attributes: [['username','name'],['avatar','profile_picture']],
                       },
+                      {
+                        model: ArticleCommentLike,
+                        as: 'comment_like',
+                        attributes: ['is_like'],
+                      },
+                      
                   ],
                     attributes: [['id','comment_reply_id'],'total_comment_like','comment','created_at'],
                   },
               
               ],
+              
               attributes: [['id','comment_id'],'comment','media','total_comment_like','total_comment_reply','created_at'],
               order:[
                   ['created_at','DESC']
