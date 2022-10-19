@@ -163,9 +163,10 @@ router.post('/api/article/add/archive',[
 	validateToken.verifyToken
 ],articleController.archive);
 
-router.get('/api/article/get/comment', articleController.get_comment);
-router.post('/api/article/add/comment',[validateToken.verifyToken],  articleController.add_comment);
-router.post('/api/article/reply/comment',[validateToken.verifyToken],  articleController.reply_comment);
+router.get('/api/article/comment/get', articleController.get_comment);
+router.post('/api/article/comment/add',[validateToken.verifyToken],  articleController.add_comment);
+router.post('/api/article/comment/reply',[validateToken.verifyToken],  articleController.reply_comment);
+router.post('/api/article/comment/update',[validateToken.verifyToken],  articleController.edit_comment);
 
 
 //Topic

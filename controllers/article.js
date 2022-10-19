@@ -516,5 +516,37 @@ module.exports = {
           errors: error
         });
       });
+    },
+
+    edit_comment(req,res){
+            
+        ArticleComments.update(
+          {
+            comment: req.body.comment,
+          },{
+          where:{
+            id: req.body.comment_id,
+            user_id:req.userId
+          }
+        }).then((data)=>{
+
+          var result = {
+            code    : 200,
+            status  : 'success',
+            message : 'Success',
+            data    : []
+          }  
+
+          return res.status(200).send(result);
+
+        }).catch((error) => {
+          res.status(400).send({
+            status: false,
+            message: 'Update error',
+            errors: error
+          })
+        });
+
+        
     }
 }
