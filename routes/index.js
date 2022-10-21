@@ -168,6 +168,9 @@ router.post('/api/article/comment/add',[validateToken.verifyToken],  articleCont
 router.post('/api/article/comment/reply',[validateToken.verifyToken],  articleController.reply_comment);
 router.post('/api/article/comment/update',[validateToken.verifyToken],  articleController.edit_comment);
 
+//Stories
+// router.get('/api/stories', articleController.stories_list);
+router.get('/api/stories', articleController.stories_list);
 
 //Topic
 router.get('/api/topic', topicController.list);

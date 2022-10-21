@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey:'user_id',
           as:'article'
       })
+
     }
   }
   User.init({

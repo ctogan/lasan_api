@@ -6,6 +6,7 @@ const UserLike = require('../models').UserLike
 const UserArchive = require('../models').UserArchive
 const ArticleComments = require('../models').ArticleComments
 const ArticleCommentLike = require('../models').ArticleCommentLikes
+const UserStory = require('../models').UserStory
 
 const utils = require('../helpers/utils');
 const slugify = require('slugify')
@@ -581,8 +582,43 @@ module.exports = {
             message: 'Update error',
             errors: error
           })
-        });
+        });   
+    },
 
+    stories_list(req,res){
+      
+       UserStory
+      .findAll({
+        include:[
+          {
+            model: Article,
+            as: 'story',
+            include:[
+              {
+                model: User,
+                as: 'author',
+                attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+              },
+            ],
+            attributes: ['slug','title',['created_at','date'],'image'],
+            
+          },
+        ],
+        order:[
+            ['created_at','DESC']
+        ]
+      })
+      .then((Story)=> {
         
+          var result = {
+            code    : 200,
+            status  : 'success',
+            message : 'Success',
+            data    : Story
+          }  
+
+          return res.status(200).send(result);
+      })
+      .catch((error)=>{res.status(400).send(error);});
     }
 }
