@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
       UserStory.belongsTo(models.Article,{
         foreignKey:'article_id',
-        as:'story'
+        as:'article'
       })
     }
   }

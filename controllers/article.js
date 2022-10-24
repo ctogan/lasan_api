@@ -592,12 +592,12 @@ module.exports = {
           include:[
               {
                 model: UserStory,
-                as: 'user_stories',
+                as: 'story',
                 required:true,
                 include:[
                   {
                     model: Article,
-                    as: 'story',
+                    as: 'article',
                     attributes: ['slug','title',['created_at','date'],'image',['subtitle','short_description']],
                     include:[
                       {
@@ -606,13 +606,13 @@ module.exports = {
                         attributes: [['topic','name']],
                       },      
                     ],
-                  },      
-              ]
+                  },       
+                ],
                 
               },      
             
           ],
-          attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+          attributes: ['uuid','first_name','last_name','username','avatar','occupation'], 
 
       }).then((users)=>{
 
