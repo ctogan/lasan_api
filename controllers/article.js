@@ -586,39 +586,46 @@ module.exports = {
     },
 
     stories_list(req,res){
-      
-       UserStory
+
+      User
       .findAll({
-        include:[
-          {
-            model: Article,
-            as: 'story',
-            include:[
+          include:[
               {
-                model: User,
-                as: 'author',
-                attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
-              },
-            ],
-            attributes: ['slug','title',['created_at','date'],'image'],
+                model: UserStory,
+                as: 'user_stories',
+                required:true,
+                include:[
+                  {
+                    model: Article,
+                    as: 'story',
+                    attributes: ['slug','title',['created_at','date'],'image',['subtitle','short_description']],
+                    include:[
+                      {
+                        model: Topic,
+                        as: 'categories',
+                        attributes: [['topic','name']],
+                      },      
+                    ],
+                  },      
+              ]
+                
+              },      
             
-          },
-        ],
-        order:[
-            ['created_at','DESC']
-        ]
-      })
-      .then((Story)=> {
-        
+          ],
+          attributes: ['uuid','first_name','last_name','username','avatar','occupation'],
+
+      }).then((users)=>{
+
           var result = {
             code    : 200,
             status  : 'success',
-            message : 'Success',
-            data    : Story
-          }  
-
+            message : 'success',
+            data    : users
+          }
           return res.status(200).send(result);
-      })
-      .catch((error)=>{res.status(400).send(error);});
+
+      });
+
+    
     }
 }

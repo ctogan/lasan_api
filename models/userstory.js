@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         as:'author'
       })
 
+
       UserStory.belongsTo(models.Article,{
         foreignKey:'article_id',
         as:'story'
