@@ -608,7 +608,7 @@ module.exports = {
                     ],
                   },       
                 ],
-                
+                attributes: [['created_at','date']],
               },      
             
           ],
