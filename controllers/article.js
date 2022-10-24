@@ -608,7 +608,7 @@ module.exports = {
                     ],
                   },       
                 ],
-                attributes: [['created_at','date']],
+                attributes: ['content',['created_at','date']],
               },      
             
           ],
@@ -626,6 +626,47 @@ module.exports = {
 
       });
 
-    
+    },
+    add_story(req,res){
+        Article.
+        findOne({
+          where: {
+            slug: req.body.slug,
+           },
+        }).then((article)=>{
+           
+
+            if (!article) {
+              return res.status(200).send({
+                code    : 200,
+                status  : 'error',
+                message : 'Article Not Found',
+                data    : []
+              });
+            }
+
+            UserStory
+            .create({
+                user_id           : req.userId,
+                article_id        : article.id,
+                content           : req.body.content,
+            });
+
+            var result = {
+              code    : 200,
+              status  : 'success',
+              message : 'Success add story',
+              data    : []
+            }      
+            return res.status(200).send(result);
+
+
+        }).catch((error) => {
+          res.status(400).send({
+            status: false,
+            message: 'story error',
+            errors: error
+          })
+        });   
     }
 }

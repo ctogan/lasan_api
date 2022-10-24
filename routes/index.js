@@ -171,6 +171,7 @@ router.post('/api/article/comment/update',[validateToken.verifyToken],  articleC
 //Stories
 // router.get('/api/stories', articleController.stories_list);
 router.get('/api/stories', articleController.stories_list);
+router.post('/api/stories/add',[validateToken.verifyToken], articleController.add_story);
 
 //Topic
 router.get('/api/topic', topicController.list);
