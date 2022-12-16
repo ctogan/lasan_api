@@ -180,6 +180,17 @@ router.post('/api/topic/add',[validateToken.verifyToken], topicController.add);
 router.get('/api/user/topic', [validateToken.verifyToken],userTopicController.list);
 router.post('/api/user/topic/add',[validateToken.verifyToken],userTopicController.add);
 
+// SAVED ARTICLE
+router.get('/api/articles/saved' , function(req , res){
+	return res.status(200).json({
+		auth: '',
+		email: '',
+		data: [],
+		message: "Success",
+		errors: null
+	});
+})
+
 
 // module.exports = function (app) {
 
