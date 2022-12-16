@@ -14,13 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       ArticleComments.belongsTo(models.User,{
         foreignKey:'user_id',
         as:'user'
-      })
+      });
 
       ArticleComments.belongsTo(models.Article,{
         foreignKey:'article_id',
         as:'article'
-      })
+      });
 
+      ArticleComments.hasMany(models.ArticleCommentLikes,{
+        foreignKey:'article_comment_id',
+        as:'comment_like'
+      });
+     
       ArticleComments.hasMany(models.ArticleComments, 
       { 
           foreignKey  : 'parent_id', 
@@ -28,16 +33,6 @@ module.exports = (sequelize, DataTypes) => {
           
       });
 
-        // ArticleComments.belongsToMany(ArticleComments, 
-        // { 
-        //     foreignKey  : 'parent_id', 
-        //     as          : 'article', 
-        // });
-  
-      // ArticleComments.belongsTo(models.ArticleComments,{
-      //   foreignKey:'parent_id',
-      //   targetKey: "id"
-      // })
     }
   }
   ArticleComments.init({

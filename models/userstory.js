@@ -11,6 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      
+      UserStory.belongsTo(models.User,{
+        foreignKey:'user_id',
+        as:'author'
+      })
+
+
+      UserStory.belongsTo(models.Article,{
+        foreignKey:'article_id',
+        as:'article'
+      })
     }
   }
   UserStory.init({
@@ -21,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     user_id: DataTypes.INTEGER,
     article_id: DataTypes.INTEGER,
+    content: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'UserStory',
